@@ -21,35 +21,65 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class stock extends eqLogic {
 
-	public function preUpdate() {
-		if ($this->getConfiguration('maitreesclave') == '') {
-			throw new Exception(__('Merci de remplir le type de lecteur',__FILE__));
-		}
-	}
-
 	public function postUpdate() {
-		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'command');
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock');
 		if (!is_object($stockCmd)) {
-			log::add('stock', 'debug', 'Création de la commande type');
+			log::add('stock', 'debug', 'Création de la commande stock');
 			$stockCmd = new stockCmd();
-			$stockCmd->setName(__('Commande recue', __FILE__));
+			$stockCmd->setName(__('Stock actuel', __FILE__));
 			$stockCmd->setEqLogic_id($this->id);
 			$stockCmd->setEqType('stock');
-			$stockCmd->setLogicalId('command');
+			$stockCmd->setLogicalId('stock');
 			$stockCmd->setType('info');
-			$stockCmd->setSubType('string');
+			$stockCmd->setSubType('numeric');
 			$stockCmd->save();
 		}
-		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'value');
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'plus1');
 		if (!is_object($stockCmd)) {
-			log::add('stock', 'debug', 'Création de la commande valeur');
+			log::add('stock', 'debug', 'Création de la commande plus1');
 			$stockCmd = new stockCmd();
-			$stockCmd->setName(__('Valeur recue', __FILE__));
+			$stockCmd->setName(__('Ajouter un', __FILE__));
 			$stockCmd->setEqLogic_id($this->id);
 			$stockCmd->setEqType('stock');
-			$stockCmd->setLogicalId('value');
-			$stockCmd->setType('info');
-			$stockCmd->setSubType('string');
+			$stockCmd->setLogicalId('plus1');
+			$stockCmd->setType('action');
+			$stockCmd->setSubType('other');
+			$stockCmd->save();
+		}
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'plusx');
+		if (!is_object($stockCmd)) {
+			log::add('stock', 'debug', 'Création de la commande plusx');
+			$stockCmd = new stockCmd();
+			$stockCmd->setName(__('Ajouter X', __FILE__));
+			$stockCmd->setEqLogic_id($this->id);
+			$stockCmd->setEqType('stock');
+			$stockCmd->setLogicalId('plusx');
+			$stockCmd->setType('action');
+			$stockCmd->setSubType('message');
+			$stockCmd->save();
+		}
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'minus1');
+		if (!is_object($stockCmd)) {
+			log::add('stock', 'debug', 'Création de la commande minus1');
+			$stockCmd = new stockCmd();
+			$stockCmd->setName(__('Enlever un', __FILE__));
+			$stockCmd->setEqLogic_id($this->id);
+			$stockCmd->setEqType('stock');
+			$stockCmd->setLogicalId('minus1');
+			$stockCmd->setType('action');
+			$stockCmd->setSubType('other');
+			$stockCmd->save();
+		}
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'minusx');
+		if (!is_object($stockCmd)) {
+			log::add('stock', 'debug', 'Création de la commande minusx');
+			$stockCmd = new stockCmd();
+			$stockCmd->setName(__('Enlever X', __FILE__));
+			$stockCmd->setEqLogic_id($this->id);
+			$stockCmd->setEqType('stock');
+			$stockCmd->setLogicalId('minusx');
+			$stockCmd->setType('action');
+			$stockCmd->setSubType('other');
 			$stockCmd->save();
 		}
 
