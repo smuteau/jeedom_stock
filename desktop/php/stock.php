@@ -122,42 +122,20 @@ $eqLogics = eqLogic::byType('stock');
             </div>
 
 
+
             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Equipement local ou déporté ?}}</label>
+              <label class="col-sm-3 control-label">{{Taille Maximum}}</label>
               <div class="col-sm-3">
-                <select id="maitreesclave" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maitreesclave"
-                onchange="if(this.selectedIndex == 1) document.getElementById('deporte').style.display = 'block';
-                else document.getElementById('deporte').style.display = 'none';">
-                <option value="local">{{Local}}</option>
-                <option value="deporte">{{Déporté}}</option>
-              </select>
-            </div>
-          </div>
-          <div id="deporte">
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{Adresse IP}}</label>
-              <div class="col-sm-3">
-                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="addressip" type="text" placeholder="{{saisir l'adresse IP}}">
+                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maximum" type="text" placeholder="{{saisir la quantité maximum du stock}}">
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Port SSH}}</label>
+              <label class="col-sm-3 control-label">{{Commande d'alerte}}</label>
               <div class="col-sm-3">
-                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="portssh" type="text" placeholder="{{saisir le port SSH}}">
+                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="alert" type="text" placeholder="{{saisir la commande d'alerte}}">
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{Identifiant}}</label>
-              <div class="col-sm-3">
-                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="user" type="text" placeholder="{{saisir le login}}">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{Mot de passe}}</label>
-              <div class="col-sm-3">
-                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" type="password" placeholder="{{saisir le password}}">
-              </div>
-            </div>
+
           </div>
 
         </fieldset>
