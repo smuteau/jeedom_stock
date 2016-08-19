@@ -141,19 +141,7 @@ $eqLogics = eqLogic::byType('stock');
         </fieldset>
       </form>
     </div>
-  </div>
-
-  <form class="form-horizontal">
-    <fieldset>
-      <div class="form-actions">
-        <a class="btn btn-danger eqLogicAction" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-        <a class="btn btn-success eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-      </div>
-    </fieldset>
-  </form>
-</br>
-
-<legend><i class="fa fa-table"></i>  {{Commandes stock}}</legend>
+  <div role="tabpanel" class="tab-pane" id="commandtab">
 <table id="table_cmd" class="table table-bordered table-condensed">
   <thead>
     <tr>
