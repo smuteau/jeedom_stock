@@ -290,10 +290,14 @@ class stockCmd extends cmd {
 			case 'action' :
 			$eqLogic = $this->getEqLogic();
 			if ($this->getLogicalId() == 'setPrice') {
-				$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'price');
-				$priceCmd->setConfiguration('value',trim($_options['title']));
-				$priceCmd->save();
-				$priceCmd->event(trim($_options['title']));
+				if (is_numeric(trim($_options['title']))) {
+					$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'price');
+					$priceCmd->setConfiguration('value',trim($_options['title']));
+					$priceCmd->save();
+					$priceCmd->event(trim($_options['title']));
+				} else {
+					log::add('stock', 'debug', 'veuillez saisir une valeur numérique');
+				}
 			} else {
 				$stockCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'stock');
 				$value = $stockCmd->getConfiguration('value');
@@ -306,21 +310,33 @@ class stockCmd extends cmd {
 					$value = $value + 1;
 					break;
 					case 'plusx':
-					$value = $value + trim($_options['title']);
+					if (is_numeric(trim($_options['title']))) {
+						$value = $value + trim($_options['title']);
+					} else {
+						log::add('stock', 'debug', 'veuillez saisir une valeur numérique');
+					}
 					break;
 					case 'minus1':
 					$value = $value - 1;
 					$conso = $conso + 1;
 					break;
 					case 'minusx':
-					$value = $value - trim($_options['title']);
-					$conso = $conso + trim($_options['title']);
+					if (is_numeric(trim($_options['title']))) {
+						$value = $value - trim($_options['title']);
+						$conso = $conso + trim($_options['title']);
+					} else {
+						log::add('stock', 'debug', 'veuillez saisir une valeur numérique');
+					}
 					break;
 					case 'setStock':
-					if ($value > trim($_options['title'])) {
-						$conso = $conso + $value - trim($_options['title']);
+					if (is_numeric(trim($_options['title']))) {
+						if ($value > trim($_options['title'])) {
+							$conso = $conso + $value - trim($_options['title']);
+						}
+						$value = trim($_options['title']);
+					} else {
+						log::add('stock', 'debug', 'veuillez saisir une valeur numérique');
 					}
-					$value = trim($_options['title']);
 					break;
 				}
 				$stockCmd->setConfiguration('value',$value);

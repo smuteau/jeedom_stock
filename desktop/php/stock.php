@@ -144,7 +144,7 @@ $eqLogics = eqLogic::byType('stock');
               </div>
             </div>
             <div class="form-group">
-            <label class="col-sm-3 control-label">{{Commande Alerte}}</label>
+            <label class="col-sm-3 control-label">{{Commande Notifications}}</label>
             <div class="col-sm-3">
               <div class="input-group">
                 <input type="text"  class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="alert" />
@@ -154,6 +154,47 @@ $eqLogics = eqLogic::byType('stock');
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{Notification sur seuil en dessous de}}</label>
+            <div class="col-sm-3">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{Notification sur consommation journalière supérieure à}}</label>
+            <div class="col-sm-3">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifDaily" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{Notification sur consommation hebdomadaire supérieure à}}</label>
+            <div class="col-sm-3">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifWeekly" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{Notification sur consommation mensuelle supérieure à}}</label>
+            <div class="col-sm-3">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifWeekly" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+            </div>
+          </div>
+          <div class="form-group">
+          <label class="col-sm-3 control-label">{{Commande de seuil}}</label>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <input type="text"  class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="alert" />
+              <span class="input-group-btn">
+                <a class="btn btn-default cursor" title="Rechercher une commande" id="bt_selectMailCmd"><i class="fa fa-list-alt"></i></a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">{{Commande à activer quand le seuil atteint}}</label>
+          <div class="col-sm-3">
+            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+          </div>
+        </div>
 
         </fieldset>
       </form>
