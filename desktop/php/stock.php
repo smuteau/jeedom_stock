@@ -130,13 +130,25 @@ $eqLogics = eqLogic::byType('stock');
               </div>
             </div>
             <div class="form-group">
+              <label class="col-sm-3 control-label">{{Jour de début de la semaine}}</label>
+              <div class="col-sm-3">
+                <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="week">
+                  <option value="2">{{Lundi}}</option>
+                  <option value="3">{{Mardi}}</option>
+                  <option value="4">{{Mercredi}}</option>
+                  <option value="5">{{Jeudi}}</option>
+                  <option value="6">{{Vendredi}}</option>
+                  <option value="7">{{Samedi}}</option>
+                  <option value="1">{{Dimanche}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
               <label class="col-sm-3 control-label">{{Commande d'alerte}}</label>
               <div class="col-sm-3">
                 <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="alert" type="text" placeholder="{{saisir la commande d'alerte}}">
               </div>
             </div>
-
-          </div>
 
         </fieldset>
       </form>
