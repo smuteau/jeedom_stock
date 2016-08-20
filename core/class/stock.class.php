@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class stock extends eqLogic {
 
-	public static function postUpdate() {
+	public function postUpdate() {
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock');
 		if (!is_object($stockCmd)) {
 			log::add('stock', 'debug', 'Création de la commande stock');
@@ -225,14 +225,14 @@ class stock extends eqLogic {
 		}
 	}
 
-	public static function cronDaily() {
+	public function cronDaily() {
+		log::add('stock', 'debug', 'calcul daily');
 		foreach (eqLogic::byType('stock', true) as $stock) {
-			log::add('stock', 'debug', 'pull daily');
 			$stock->dailyStock();
 		}
 	}
 
-	public static function dailyStock() {
+	public function dailyStock() {
 		//récupération de la conso jour précédent
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyConso');
 		$conso = $consoCmd->getConfiguration('inprogress');
