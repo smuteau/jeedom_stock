@@ -33,6 +33,7 @@ class stock extends eqLogic {
 			$stockCmd->setType('info');
 			$stockCmd->setSubType('numeric');
 			$stockCmd->setIsHistorized(1);
+			$stockCmd->setConfiguration('value', 0);
 			$stockCmd->save();
 		}
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'percent');
@@ -46,6 +47,7 @@ class stock extends eqLogic {
 			$stockCmd->setType('info');
 			$stockCmd->setSubType('numeric');
 			$stockCmd->setIsHistorized(1);
+			$stockCmd->setConfiguration('value', 0);
 			$stockCmd->save();
 		}
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'prix');
@@ -59,6 +61,7 @@ class stock extends eqLogic {
 			$stockCmd->setType('info');
 			$stockCmd->setSubType('numeric');
 			$stockCmd->setIsHistorized(1);
+			$stockCmd->setConfiguration('value', 0);
 			$stockCmd->save();
 		}
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'plus1');
@@ -323,7 +326,7 @@ class stockCmd extends cmd {
 				$stockCmd->setConfiguration('value',$value);
 				$stockCmd->save();
 				$stockCmd->event($value);
-				$percent = $value / $percentConf / 100;
+				$percent = $value * $percentConf / 100;
 				$percentCmd->setConfiguration('value',$percent);
 				$percentCmd->save();
 				$percentCmd->event($percent);
