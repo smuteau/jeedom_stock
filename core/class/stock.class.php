@@ -332,6 +332,7 @@ class stockCmd extends cmd {
 					$consoCmd->save();
 					$consoCmd->event($conso);
 				}
+				log::add('stock', 'debug', 'execute : ' . $value . ' ' . $percent . '% ' . $conso);
 			}
 			return true;
 			break;
