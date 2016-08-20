@@ -225,6 +225,7 @@ class stock extends eqLogic {
 		}
 	}
 
+	/*
 	public static function cronDaily() {
 		foreach (eqLogic::byType('stock', true) as $stock) {
 			log::add('stock', 'debug', 'pull daily');
@@ -268,7 +269,7 @@ class stock extends eqLogic {
 			$monthCmd->setConfiguration('inprogress', $month);
 			$monthCmd->save();
 		}
-	}
+	}*/
 }
 
 class stockCmd extends cmd {
