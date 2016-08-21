@@ -130,6 +130,12 @@ $eqLogics = eqLogic::byType('stock');
               </div>
             </div>
             <div class="form-group">
+              <label class="col-sm-3 control-label">{{Conversion énergétique de l'équipement}}</label>
+              <div class="col-sm-3">
+                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maximum" type="text" placeholder="{{saisir le nombre de kWh par unité}}">
+              </div>
+            </div>
+            <div class="form-group">
               <label class="col-sm-3 control-label">{{Jour de début de la semaine}}</label>
               <div class="col-sm-3">
                 <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="week">
@@ -192,7 +198,7 @@ $eqLogics = eqLogic::byType('stock');
         <div class="form-group">
           <label class="col-sm-3 control-label">{{Commande à activer quand le seuil atteint}}</label>
           <div class="col-sm-3">
-            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle la commande sera éxécuter}}">
           </div>
         </div>
 
