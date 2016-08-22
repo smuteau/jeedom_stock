@@ -64,6 +64,9 @@ $eqLogics = eqLogic::byType('stock');
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
       <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+      <li role="presentation"><a href="#consotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Consommation}}</a></li>
+      <li role="presentation"><a href="#pricetab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Dépense}}</a></li>
+      <li role="presentation"><a href="#energytab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Energie}}</a></li>
     </ul>
 
     <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -219,6 +222,57 @@ $eqLogics = eqLogic::byType('stock');
   <tbody>
 
   </tbody>
+</table>
+
+</div>
+<div role="tabpanel" class="tab-pane" id="consotab">
+<table id="table_conso" class="table table-bordered table-condensed">
+<thead>
+  <tr>
+    <th style="width: 50px;">#</th>
+    <th style="width: 300px;">{{Nom}}</th>
+    <th style="width: 160px;">{{Sous-Type}}</th>
+    <th style="width: 200px;">{{Paramètres}}</th>
+    <th style="width: 100px;"></th>
+  </tr>
+</thead>
+<tbody>
+
+</tbody>
+</table>
+
+</div>
+<div role="tabpanel" class="tab-pane" id="pricetab">
+<table id="price_cmd" class="table table-bordered table-condensed">
+<thead>
+  <tr>
+    <th style="width: 50px;">#</th>
+    <th style="width: 300px;">{{Nom}}</th>
+    <th style="width: 160px;">{{Sous-Type}}</th>
+    <th style="width: 200px;">{{Paramètres}}</th>
+    <th style="width: 100px;"></th>
+  </tr>
+</thead>
+<tbody>
+
+</tbody>
+</table>
+
+</div>
+<div role="tabpanel" class="tab-pane" id="energytab">
+<table id="table_energy" class="table table-bordered table-condensed">
+<thead>
+  <tr>
+    <th style="width: 50px;">#</th>
+    <th style="width: 300px;">{{Nom}}</th>
+    <th style="width: 160px;">{{Sous-Type}}</th>
+    <th style="width: 200px;">{{Paramètres}}</th>
+    <th style="width: 100px;"></th>
+  </tr>
+</thead>
+<tbody>
+
+</tbody>
 </table>
 
 </div>
