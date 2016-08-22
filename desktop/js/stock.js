@@ -64,3 +64,15 @@ function addCmdToTable(_cmd) {
   });
 
 }
+
+$('#bt_selectMailCmd').on('click', function () {
+    jeedom.cmd.getSelectModal({cmd: {type: 'action', subType: 'message'}}, function (result) {
+        $('.eqLogicAttr[data-l2key=alert]').atCaret('insert', result.human);
+    });
+});
+
+$('#bt_selectActCmd').on('click', function () {
+    jeedom.cmd.getSelectModal({cmd: {type: 'action', subType: 'other'}}, function (result) {
+        $('.eqLogicAttr[data-l2key=alert]').atCaret('insert', result.human);
+    });
+});

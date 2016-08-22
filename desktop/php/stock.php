@@ -135,7 +135,7 @@ $eqLogics = eqLogic::byType('stock');
             <div class="form-group">
               <label class="col-sm-3 control-label">{{Conversion énergétique de l'équipement}}</label>
               <div class="col-sm-3">
-                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maximum" type="text" placeholder="{{saisir le nombre de kWh par unité}}">
+                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="energy" type="text" placeholder="{{saisir le nombre de kWh par unité}}">
               </div>
             </div>
             <div class="form-group">
@@ -193,7 +193,7 @@ $eqLogics = eqLogic::byType('stock');
             <div class="input-group">
               <input type="text"  class="eqLogicAttr configuration form-control" data-l1key="configuration" data-l2key="alert" />
               <span class="input-group-btn">
-                <a class="btn btn-default cursor" title="Rechercher une commande" id="bt_selectMailCmd"><i class="fa fa-list-alt"></i></a>
+                <a class="btn btn-default cursor" title="Rechercher une commande" id="bt_selectActCmd"><i class="fa fa-list-alt"></i></a>
               </span>
             </div>
           </div>

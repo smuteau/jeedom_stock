@@ -400,14 +400,42 @@ class stock extends eqLogic {
 		//récupération de la conso jour précédent
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyConso');
 		$conso = $consoCmd->getConfiguration('inprogress');
-		$consominus = $consoCmd->getConfiguration('value');
+		$consoW = $consoCmd->getConfiguration('W'.$jourW);
+		$consoM = $consoCmd->getConfiguration('M'.$jourW);
 		$consoCmd->setConfiguration('inprogress', 0);
 		$consoCmd->setConfiguration('value', $conso);
+		$consoCmd->setConfiguration('W'.$jourW, $conso);
+		$consoCmd->setConfiguration('M'.$jourW, $conso);
 		$stockCmd->save();
 		$consoCmd->event($conso);
+		//prix daily
+		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyPrice');
+		$price = $priceCmd->getConfiguration('inprogress');
+		$priceW = $priceCmd->getConfiguration('W'.$jourW);
+		$priceM = $priceCmd->getConfiguration('M'.$jourW);
+		$priceCmd->setConfiguration('inprogress', 0);
+		$priceCmd->setConfiguration('value', $price);
+		$priceCmd->save();
+		$priceCmd->event($price);
+		//energy daily
+		$energyCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyEnergy');
+		if ($eqLogic->getConfiguration('energy')!= '' && is_numeric($eqLogic->getConfiguration('energy'))) {
+			$energy = $conso * $eqLogic->getConfiguration('energy');
+			$energyW = $consoW * $eqLogic->getConfiguration('energy');
+			$energyM = $consoM * $eqLogic->getConfiguration('energy');
+		} else {
+			$energy = 0;
+			$energyW = 0;
+			$energyM = 0;
+		}
+		$energyCmd->setConfiguration('value', $energy);
+		$energyCmd->save();
+		$energyCmd->event($energy);
 		//calcul conso de la semaine roulante
 		$weekCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'weeklyCountinuousConso');
-		$week = $consoCmd->getConfiguration('1') + $consoCmd->getConfiguration('2') + $consoCmd->getConfiguration('3') + $consoCmd->getConfiguration('4') + $consoCmd->getConfiguration('5') + $consoCmd->getConfiguration('6') + $consoCmd->getConfiguration('7');
+		for ($i=1; $i < 8; $i++) {
+			$week = $week + $consoCmd->getConfiguration('W'.$i);
+		}
 		$weekCmd->setConfiguration('value', $week);
 		$weekCmd->save();
 		$weekCmd->event($week);
