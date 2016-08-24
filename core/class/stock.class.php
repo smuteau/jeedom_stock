@@ -395,24 +395,36 @@ class stock extends eqLogic {
 	}
 
 	public function dailyStock() {
+		//jour en cours
 		$jourW = date("N");
 		$jourM = date("j");
+		//jour pour historisation
+		if ($jourW == 1) {
+			$histW = 'W7';
+		} else {
+			$histW = 'W' . ($jourW - 1);
+		}
+		if ($jourM == 1) {
+			$histM = 'M30';
+		} else {
+			$histM = 'M' . ($jourM - 1);
+		}
 		//récupération de la conso jour précédent
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyConso');
 		$conso = $consoCmd->getConfiguration('inprogress');
-		$consoW = $consoCmd->getConfiguration('W'.$jourW);
-		$consoM = $consoCmd->getConfiguration('M'.$jourW);
+		$consoW = $consoCmd->getConfiguration($histW);
+		$consoM = $consoCmd->getConfiguration($histM);
 		$consoCmd->setConfiguration('inprogress', 0);
 		$consoCmd->setConfiguration('value', $conso);
-		$consoCmd->setConfiguration('W'.$jourW, $conso);
-		$consoCmd->setConfiguration('M'.$jourW, $conso);
+		$consoCmd->setConfiguration($histW, $conso);
+		$consoCmd->setConfiguration($histM, $conso);
 		$stockCmd->save();
 		$consoCmd->event($conso);
 		//prix daily
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyPrice');
 		$price = $priceCmd->getConfiguration('inprogress');
-		$priceW = $priceCmd->getConfiguration('W'.$jourW);
-		$priceM = $priceCmd->getConfiguration('M'.$jourW);
+		$priceW = $priceCmd->getConfiguration($histW);
+		$priceM = $priceCmd->getConfiguration($histM);
 		$priceCmd->setConfiguration('inprogress', 0);
 		$priceCmd->setConfiguration('value', $price);
 		$priceCmd->save();
@@ -454,6 +466,8 @@ class stock extends eqLogic {
 			$weekCmd->save();
 		}
 		//calcul conso du mois roulant (30 jours)
+
+		###ICI
 		$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyContinuousConso');
 		$month = $monthCmd->getConfiguration('value') + $conso;
 		if ($monthCmd->getConfiguration('days') > 29) {
