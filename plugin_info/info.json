@@ -1,0 +1,8 @@
+{
+	"id" : "stock",
+	"name" : "Gestion de Stock",
+	"licence" : "AGPL",
+	"author" : "lunarok",
+	"require" : "2.4",
+	"category" : "energy"
+}
