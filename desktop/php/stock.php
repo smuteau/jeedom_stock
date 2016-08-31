@@ -243,7 +243,7 @@ $eqLogics = eqLogic::byType('stock');
 
 </div>
 <div role="tabpanel" class="tab-pane" id="pricetab">
-<table id="price_cmd" class="table table-bordered table-condensed">
+<table id="table_price" class="table table-bordered table-condensed">
 <thead>
   <tr>
     <th style="width: 50px;">#</th>
