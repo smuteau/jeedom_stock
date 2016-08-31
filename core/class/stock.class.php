@@ -205,6 +205,7 @@ class stock extends eqLogic {
 			$stockCmd->setSubType('numeric');
 			$stockCmd->setConfiguration('inprogress', 0);
 			$stockCmd->setConfiguration('value', 0);
+			$stockCmd->setConfiguration('day', 0);
 			$stockCmd->setConfiguration('type', 'conso');
 			$stockCmd->setIsHistorized(1);
 			$stockCmd->save();
@@ -285,6 +286,7 @@ class stock extends eqLogic {
 			$stockCmd->setSubType('numeric');
 			$stockCmd->setConfiguration('inprogress', 0);
 			$stockCmd->setConfiguration('value', 0);
+			$stockCmd->setConfiguration('day', 0);
 			$stockCmd->setConfiguration('type', 'price');
 			$stockCmd->setIsHistorized(1);
 			$stockCmd->save();
@@ -364,6 +366,7 @@ class stock extends eqLogic {
 			$stockCmd->setType('info');
 			$stockCmd->setSubType('numeric');
 			$stockCmd->setConfiguration('inprogress', 0);
+			$stockCmd->setConfiguration('day', 0);
 			$stockCmd->setConfiguration('value', 0);
 			$stockCmd->setConfiguration('type', 'energy');
 			$stockCmd->setIsHistorized(1);
@@ -404,11 +407,12 @@ class stock extends eqLogic {
 		} else {
 			$histW = 'W' . ($jourW - 1);
 		}
-		if ($jourM == 1) {
+		if ($consoCmd->getConfiguration('30days') < 30) {
 			$histM = 'M30';
 		} else {
 			$histM = 'M' . ($jourM - 1);
 		}
+
 		//récupération de la conso jour précédent
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyConso');
 		$conso = $consoCmd->getConfiguration('inprogress');
@@ -417,7 +421,6 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration('inprogress', 0);
 		$consoCmd->setConfiguration('value', $conso);
 		$consoCmd->setConfiguration($histW, $conso);
-		$consoCmd->setConfiguration($histM, $conso);
 		$stockCmd->save();
 		$consoCmd->event($conso);
 		//prix daily
@@ -433,12 +436,8 @@ class stock extends eqLogic {
 		$energyCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'dailyEnergy');
 		if ($eqLogic->getConfiguration('energy')!= '' && is_numeric($eqLogic->getConfiguration('energy'))) {
 			$energy = $conso * $eqLogic->getConfiguration('energy');
-			$energyW = $consoW * $eqLogic->getConfiguration('energy');
-			$energyM = $consoM * $eqLogic->getConfiguration('energy');
 		} else {
 			$energy = 0;
-			$energyW = 0;
-			$energyM = 0;
 		}
 		$energyCmd->setConfiguration('value', $energy);
 		$energyCmd->save();
@@ -451,6 +450,24 @@ class stock extends eqLogic {
 		$weekCmd->setConfiguration('value', $week);
 		$weekCmd->save();
 		$weekCmd->event($week);
+		//calcul conso de la semaine roulante
+		$weekCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'weeklyCountinuousPrice');
+		for ($i=1; $i < 8; $i++) {
+			$week = $week + $priceCmd->getConfiguration('W'.$i);
+		}
+		$weekCmd->setConfiguration('value', $week);
+		$weekCmd->save();
+		$weekCmd->event($week);
+		//energy weeklycont
+		$energyCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'weeklyCountinuousEnergy');
+		if ($eqLogic->getConfiguration('energy')!= '' && is_numeric($eqLogic->getConfiguration('energy'))) {
+			$energy = $week * $eqLogic->getConfiguration('energy');
+		} else {
+			$energy = 0;
+		}
+		$energyCmd->setConfiguration('value', $energy);
+		$energyCmd->save();
+		$energyCmd->event($energy);
 		//calcul conso de la semaine
 		$weekCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'weeklyConso');
 		$week = $weekCmd->getConfiguration('inprogress') + $conso;
@@ -460,21 +477,44 @@ class stock extends eqLogic {
 			$weekCmd->setConfiguration('inprogress', 0);
 			$weekCmd->save();
 			$weekCmd->event($week);
+			//energy weekly
+			$energyCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'weeklyEnergy');
+			if ($eqLogic->getConfiguration('energy')!= '' && is_numeric($eqLogic->getConfiguration('energy'))) {
+				$energy = $week * $eqLogic->getConfiguration('energy');
+			} else {
+				$energy = 0;
+			}
+			$energyCmd->setConfiguration('value', $energy);
+			$energyCmd->save();
+			$energyCmd->event($energy);
 		} else {
 			//semaine en cours, on ajoute juste la conso du jour précédent
 			$weekCmd->setConfiguration('inprogress', $week);
 			$weekCmd->save();
 		}
 		//calcul conso du mois roulant (30 jours)
-
-		###ICI
 		$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyContinuousConso');
 		$month = $monthCmd->getConfiguration('value') + $conso;
 		if ($monthCmd->getConfiguration('days') > 29) {
-			$month = $month - $consominus;
+			$month = $month - $monthCmd->getConfiguration('lastday');
+		} else {
+			$newday = $monthCmd->getConfiguration('days') + 1;
+			$monthCmd->setConfiguration('days', $newday);
 		}
+		$monthCmd->setConfiguration('value', $month);
+		$monthCmd->setConfiguration('lastday', $conso);
 		$monthCmd->save();
 		$monthCmd->event($month);
+		//energy monthlycont
+		$energyCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyCountinuousEnergy');
+		if ($eqLogic->getConfiguration('energy')!= '' && is_numeric($eqLogic->getConfiguration('energy'))) {
+			$energy = $month * $eqLogic->getConfiguration('energy');
+		} else {
+			$energy = 0;
+		}
+		$energyCmd->setConfiguration('value', $energy);
+		$energyCmd->save();
+		$energyCmd->event($energy);
 		//calcul conso du mois
 		$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyConso');
 		$month = $monthCmd->getConfiguration('inprogress') + $conso;
@@ -484,11 +524,22 @@ class stock extends eqLogic {
 			$monthCmd->setConfiguration('inprogress', 0);
 			$monthCmd->save();
 			$monthCmd->event($month);
+			//energy monthly
+			$energyCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyEnergy');
+			if ($eqLogic->getConfiguration('energy')!= '' && is_numeric($eqLogic->getConfiguration('energy'))) {
+				$energy = $month * $eqLogic->getConfiguration('energy');
+			} else {
+				$energy = 0;
+			}
+			$energyCmd->setConfiguration('value', $energy);
+			$energyCmd->save();
+			$energyCmd->event($energy);
 		} else {
 			//mois en cours, on ajoute juste la conso du jour précédent
 			$monthCmd->setConfiguration('inprogress', $month);
 			$monthCmd->save();
 		}
+
 	}
 }
 
