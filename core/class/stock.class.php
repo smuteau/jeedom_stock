@@ -655,17 +655,17 @@ class stockCmd extends cmd {
 				$stockCmd->save();
 				$stockCmd->event($value);
 
+				if ($consoCmd->getConfiguration('inprogress') != $conso) {
+					$consoCmd->setConfiguration('inprogress',$conso);
+					$consoCmd->save();
+				}
+
 				if ($eqLogic->getConfiguration('maximum') != '' && $eqLogic->getConfiguration('maximum') != '0' && is_numeric($eqLogic->getConfiguration('maximum'))) {
 					$percentConf = $eqLogic->getConfiguration('maximum');
 					$percent = $value * $percentConf / 100;
 					$percentCmd->setConfiguration('value',$percent);
 					$percentCmd->save();
 					$percentCmd->event($percent);
-					if ($consoCmd->getConfiguration('inprogress') != $conso) {
-						$consoCmd->setConfiguration('inprogress',$conso);
-						$consoCmd->save();
-						$consoCmd->event($conso);
-					}
 					log::add('stock', 'debug', 'execute : ' . $value . ' ' . $percent . '% ' . $conso);
 				}
 

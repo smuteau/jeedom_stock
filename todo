@@ -1,28 +1,10 @@
 Add a widget with stock value + and - only
 Add a panel with the different graphs
-Add the tracking of price for the consommation
-Add the tarcking of energy equivalent of consommation
 Add hourly
 Try to see for tendances somewhere
 Alertes messages sur stock, conso quotidienne, conso hebdo, conso mensuelle
 Commande sur stock
 
-plus1 / minus1 / plusx / minus1 / setStock / setPrice (verifier numeric)
+setStock a traiter (stock du prix, conso si - ...)
 
-stock
-
-percent
-
-prix
-
-dailyConso / weeklyConso / monthlyConso
-weeklyCountinuousConso / monthlyContinuousConso
-
-dailyConso -> inprogress
-weeklyConso -> if jourW = confW {weeklyConso value = inprogress, inprogress = conso inprogress } else { inprogress = inprogress + conso inprogress}
-
-dailyPrice /weeklyPrice / monthlyPrice
-weeklyCountinuousPrice / monthlyContinuousPrice
-
-dailyEnergy / weeklyEnergy / monthlyEnergy
-weeklyCountinuousEnergy / monthlyContinuousEnergy
+setPrix garder en mémoire le prix avec stock
