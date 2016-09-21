@@ -133,12 +133,6 @@ $eqLogics = eqLogic::byType('stock');
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Conversion énergétique de l'équipement}}</label>
-              <div class="col-sm-3">
-                <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="energy" type="text" placeholder="{{saisir le nombre de kWh par unité}}">
-              </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-3 control-label">{{Jour de début de la semaine}}</label>
               <div class="col-sm-3">
                 <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="week">
@@ -244,23 +238,6 @@ $eqLogics = eqLogic::byType('stock');
 </div>
 <div role="tabpanel" class="tab-pane" id="pricetab">
 <table id="table_price" class="table table-bordered table-condensed">
-<thead>
-  <tr>
-    <th style="width: 50px;">#</th>
-    <th style="width: 300px;">{{Nom}}</th>
-    <th style="width: 160px;">{{Sous-Type}}</th>
-    <th style="width: 200px;">{{Paramètres}}</th>
-    <th style="width: 100px;"></th>
-  </tr>
-</thead>
-<tbody>
-
-</tbody>
-</table>
-
-</div>
-<div role="tabpanel" class="tab-pane" id="energytab">
-<table id="table_energy" class="table table-bordered table-condensed">
 <thead>
   <tr>
     <th style="width: 50px;">#</th>

@@ -43,9 +43,6 @@ function addCmdToTable(_cmd) {
   } else if (_cmd.configuration.type == 'price') {
     $('#table_price tbody').append(tr);
     var tr = $('#table_price tbody tr:last');
-  } else if (_cmd.configuration.type == 'energy') {
-    $('#table_energy tbody').append(tr);
-    var tr = $('#table_energy tbody tr:last');
   } else {
     $('#table_cmd tbody').append(tr);
     var tr = $('#table_cmd tbody tr:last');
