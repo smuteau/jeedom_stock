@@ -378,6 +378,11 @@ class stock extends eqLogic {
 			$weekCmd->setConfiguration('inprogress', 0);
 			$weekCmd->save();
 			$weekCmd->event($week);
+		} else {
+			//semaine en cours, on ajoute juste le prix du jour précédent
+			$weekCmd->setConfiguration('inprogress', $week);
+			$weekCmd->save();
+		}
 		//calcul prix de la semaine
 		$weekCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'weeklyPrice');
 		$week = $weekCmd->getConfiguration('inprogress') + $price;
@@ -427,21 +432,22 @@ class stock extends eqLogic {
 			$monthCmd->setConfiguration('inprogress', 0);
 			$monthCmd->save();
 			$monthCmd->event($month);
-		//calcul prix du mois
-		$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyPrice');
-		$month = $monthCmd->getConfiguration('inprogress') + $price;
-		if (1 == $jourM) {
-			//début de mois, on met la valeur à jour
-			$monthCmd->setConfiguration('value', $month);
-			$monthCmd->setConfiguration('inprogress', 0);
-			$monthCmd->save();
-			$monthCmd->event($month);
-		} else {
-			//mois en cours, on ajoute juste la conso du jour précédent
-			$monthCmd->setConfiguration('inprogress', $month);
-			$monthCmd->save();
-		}
+			//calcul prix du mois
+			$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyPrice');
+			$month = $monthCmd->getConfiguration('inprogress') + $price;
+			if (1 == $jourM) {
+				//début de mois, on met la valeur à jour
+				$monthCmd->setConfiguration('value', $month);
+				$monthCmd->setConfiguration('inprogress', 0);
+				$monthCmd->save();
+				$monthCmd->event($month);
+			} else {
+				//mois en cours, on ajoute juste la conso du jour précédent
+				$monthCmd->setConfiguration('inprogress', $month);
+				$monthCmd->save();
+			}
 
+		}
 	}
 }
 
@@ -464,6 +470,10 @@ class stockCmd extends cmd {
 				if (is_numeric(trim($_options['title']))) {
 					$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'price');
 					$priceCmd->setConfiguration('value',trim($_options['title']));
+					if ($priceCmd->getConfiguration('value') == '') {
+						$stockCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'stock');
+						$priceCmd->setConfiguration('list',trim($_options['title']) . ':' . $stockCmd->getConfiguration('value'));
+					}
 					$priceCmd->save();
 					$priceCmd->event(trim($_options['title']));
 				} else {
@@ -478,6 +488,8 @@ class stockCmd extends cmd {
 				$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'price');
 				$price = $priceCmd->getConfiguration('value');
 				$pricelist = $priceCmd->getConfiguration('complete');
+				$addprice = 0;
+				$minprice = 0;
 
 				switch ($this->getLogicalId()) {
 					case 'plus1':
@@ -495,11 +507,13 @@ class stockCmd extends cmd {
 					case 'minus1':
 					$value = $value - 1;
 					$conso = $conso + 1;
+					$minprice = 1;
 					break;
 					case 'minusx':
 					if (is_numeric(trim($_options['title']))) {
 						$value = $value - trim($_options['title']);
 						$conso = $conso + trim($_options['title']);
+						$addprice = trim($_options['title']);
 					} else {
 						log::add('stock', 'debug', 'veuillez saisir une valeur numérique');
 					}
@@ -508,6 +522,9 @@ class stockCmd extends cmd {
 					if (is_numeric(trim($_options['title']))) {
 						if ($value > trim($_options['title'])) {
 							$conso = $conso + $value - trim($_options['title']);
+							$minprice = $value - trim($_options['title']);
+						} else {
+							$addprice = trim($_options['title']) - $value;
 						}
 						$value = trim($_options['title']);
 					} else {
