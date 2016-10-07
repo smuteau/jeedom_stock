@@ -485,7 +485,7 @@ class stockCmd extends cmd {
 				$consoCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'dailyConso');
 				$conso = $consoCmd->getConfiguration('inprogress');
 				$percentCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'percent');
-				$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'price');
+				$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'prix');
 				$price = $priceCmd->getConfiguration('value');
 				$pricelist = $priceCmd->getConfiguration('complete');
 				$addprice = 0;
