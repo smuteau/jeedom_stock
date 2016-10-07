@@ -66,7 +66,6 @@ $eqLogics = eqLogic::byType('stock');
       <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
       <li role="presentation"><a href="#consotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Consommation}}</a></li>
       <li role="presentation"><a href="#pricetab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Dépense}}</a></li>
-      <li role="presentation"><a href="#energytab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Energie}}</a></li>
     </ul>
 
     <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -157,12 +156,7 @@ $eqLogics = eqLogic::byType('stock');
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">{{Notification sur seuil en dessous de}}</label>
-            <div class="col-sm-3">
-              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
-            </div>
-          </div>
+
           <div class="form-group">
             <label class="col-sm-3 control-label">{{Notification sur consommation journalière supérieure à}}</label>
             <div class="col-sm-3">
