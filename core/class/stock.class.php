@@ -540,7 +540,7 @@ class stockCmd extends cmd {
 					// il y a eu consommation, modification inprogress
 					$consoCmd->setConfiguration('inprogress',$conso);
 					$consoCmd->save();
-					$consoCmd->event($conso);
+					//$consoCmd->event($conso);
 				}
 
 				if ($price != '') {
