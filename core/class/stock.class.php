@@ -454,21 +454,19 @@ class stock extends eqLogic {
 			$monthCmd->setConfiguration('inprogress', $month);
 			$monthCmd->save();
 		}
-			//calcul prix du mois
-			$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyPrice');
-			$month = $monthCmd->getConfiguration('inprogress') + $price;
-			if (1 == $jourM) {
-				//début de mois, on met la valeur à jour
-				$monthCmd->setConfiguration('value', $month);
-				$monthCmd->setConfiguration('inprogress', 0);
-				$monthCmd->save();
-				$monthCmd->event($month);
-			} else {
-				//mois en cours, on ajoute juste la conso du jour précédent
-				$monthCmd->setConfiguration('inprogress', $month);
-				$monthCmd->save();
-			}
-
+		//calcul prix du mois
+		$monthCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'monthlyPrice');
+		$month = $monthCmd->getConfiguration('inprogress') + $price;
+		if (1 == $jourM) {
+			//début de mois, on met la valeur à jour
+			$monthCmd->setConfiguration('value', $month);
+			$monthCmd->setConfiguration('inprogress', 0);
+			$monthCmd->save();
+			$monthCmd->event($month);
+		} else {
+			//mois en cours, on ajoute juste la conso du jour précédent
+			$monthCmd->setConfiguration('inprogress', $month);
+			$monthCmd->save();
 		}
 	}
 }
