@@ -15,8 +15,6 @@
 * You should have received a copy of the GNU General Public License
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
-
-/* * ***************************Includes********************************* */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class stock extends eqLogic {
@@ -290,15 +288,10 @@ class stockCmd extends cmd {
 			return $this->getConfiguration('value');
 		} else {
 			$eqLogic = $this->getEqLogic();
-			if ($this->getConfiguration('id') == 'plus1' || $this->getConfiguration('id') == 'minus1' ||) {
-				switch ($this->getConfiguration('id')) {
-					case 'plus1':
-					$eqLogic->addStock(1);
-					break;
-					case 'minus1':
-					$eqLogic->rmStock(1);
-					break;
-				}
+			if ($this->getConfiguration('id') == 'plus1') {
+				$eqLogic->addStock(1);
+			} elseif ($this->getConfiguration('id') == 'minus1'){
+				$eqLogic->rmStock(1);
 			} else {
 				if (is_numeric(trim($_options['title']))) {
 					switch ($this->getConfiguration('id')) {
