@@ -64,6 +64,7 @@ $eqLogics = eqLogic::byType('stock');
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
       <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+      <li role="presentation"><a href="#statustab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Statut}}</a></li>
       <li role="presentation"><a href="#consotab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Consommation}}</a></li>
       <li role="presentation"><a href="#pricetab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Dépense}}</a></li>
     </ul>
@@ -187,7 +188,7 @@ $eqLogics = eqLogic::byType('stock');
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label">{{Commande à activer quand le seuil atteint}}</label>
+          <label class="col-sm-3 control-label">{{Commande à activer sur seuil atteint}}</label>
           <div class="col-sm-3">
             <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle la commande sera éxécuter}}">
           </div>
@@ -211,7 +212,24 @@ $eqLogics = eqLogic::byType('stock');
 
   </tbody>
 </table>
+</div>
+<div role="tabpanel" class="tab-pane" id="statustab">
+<table id="table_conso" class="table table-bordered table-condensed">
+<thead>
+  <tr>
+    <th style="width: 50px;">#</th>
+    <th style="width: 300px;">{{Nom}}</th>
+    <th style="width: 160px;">{{Sous-Type}}</th>
+    <th style="width: 200px;">{{Paramètres}}</th>
+    <th style="width: 100px;"></th>
+  </tr>
+</thead>
+<tbody>
 
+</tbody>
+</table>
+
+</div>
 </div>
 <div role="tabpanel" class="tab-pane" id="consotab">
 <table id="table_conso" class="table table-bordered table-condensed">
