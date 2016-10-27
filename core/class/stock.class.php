@@ -49,14 +49,14 @@ class stock extends eqLogic {
 	}
 
 	public function checkCmdOk($id, $type, $name, $subtype, $visible, $template) {
-		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),$price . '-' . $id);
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),$type . '-' . $id);
 		if (!is_object($stockCmd)) {
-			log::add('stock', 'debug', 'Création de la commande ' . $price . '-' . $id);
+			log::add('stock', 'debug', 'Création de la commande ' . $type . '-' . $id);
 			$stockCmd = new stockCmd();
 			$stockCmd->setName(__($name, __FILE__));
 			$stockCmd->setEqLogic_id($this->id);
 			$stockCmd->setEqType('stock');
-			$stockCmd->setLogicalId($price . '-' . $id);
+			$stockCmd->setLogicalId($type . '-' . $id);
 			if ($subtype == 'numeric') {
 				$stockCmd->setType('info');
 				$stockCmd->setSubType('numeric');

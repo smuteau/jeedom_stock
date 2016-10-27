@@ -230,7 +230,6 @@ $eqLogics = eqLogic::byType('stock');
 </table>
 
 </div>
-</div>
 <div role="tabpanel" class="tab-pane" id="consotab">
 <table id="table_conso" class="table table-bordered table-condensed">
 <thead>
