@@ -265,7 +265,7 @@ class stock extends eqLogic {
 			$histW = 'W' . ($jourW - 1);
 		}
 		$histM = date("n");
-		for (array('conso','price') as $type) {
+		foreach (array('conso','price') as $type) {
 			$currentCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(), $type.'-current');
 			$value = $currentCmd->getConfiguration('value');
 			$this->dailyDaily($type,$value,$histW);
