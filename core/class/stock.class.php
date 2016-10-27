@@ -48,7 +48,7 @@ class stock extends eqLogic {
 		}
 	}
 
-	public function checkCmdOk($id, $type, $name, $subtype, $visible, $template) {
+	public function checkCmdOk($type, $id, $name, $subtype, $visible, $template) {
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),$type . '-' . $id);
 		if (!is_object($stockCmd)) {
 			log::add('stock', 'debug', 'Création de la commande ' . $type . '-' . $id);
