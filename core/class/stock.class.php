@@ -75,7 +75,7 @@ class stock extends eqLogic {
 			if ($subtype == 'numeric') {
 				$stockCmd->setIsHistorized(1);
 			}
-			if ($visible == '1') {
+			if ($visible == 1) {
 				$stockCmd->setIsVisible(1);
 			}
 			if ($template != 'none') {
@@ -98,7 +98,6 @@ class stock extends eqLogic {
 			$percentCmd->setConfiguration('value',$percent);
 			$percentCmd->save();
 			$percentCmd->event($percent);
-			log::add('stock', 'debug', 'execute : ' . $value . ' ' . $percent . '% ' . $conso);
 		}
 	}
 
@@ -284,6 +283,7 @@ class stockCmd extends cmd {
 	}
 
 	public function execute($_options = null) {
+		log::add('stock', 'debug', 'execute : ' . $this->getConfiguration('id') . ' ' . $this->getConfiguration('type') . ' ' . $this->getLogicalId());
 		if ($this->getType() == 'info') {
 			return $this->getConfiguration('value');
 		} else {
