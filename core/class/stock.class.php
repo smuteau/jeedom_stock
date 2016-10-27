@@ -48,7 +48,7 @@ class stock extends eqLogic {
 		}
 	}
 
-	public function checkCmdOk($type, $id, $name, $subtype, $visible, $template) {
+	public function checkCmdOk($id, $type, $name, $subtype, $visible, $template) {
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),$type . '-' . $id);
 		if (!is_object($stockCmd)) {
 			log::add('stock', 'debug', 'Création de la commande ' . $type . '-' . $id);
@@ -71,7 +71,7 @@ class stock extends eqLogic {
 			$stockCmd->setConfiguration('inprogress', 0);
 			$stockCmd->setConfiguration('value', 0);
 			$stockCmd->setConfiguration('type', $type);
-			$stockCmd->setConfiguration('type', $id);
+			$stockCmd->setConfiguration('id', $id);
 			if ($subtype == 'numeric') {
 				$stockCmd->setIsHistorized(1);
 			}
