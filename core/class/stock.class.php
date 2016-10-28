@@ -86,7 +86,7 @@ class stock extends eqLogic {
 			}
 			$stockCmd->save();
 			if ($_subtype == 'numeric') {
-				$stockCmd->checkAndUpdateCmd('0.0');
+				$stockCmd->event('0.0');
 			}
 		}
 	}
@@ -99,7 +99,7 @@ class stock extends eqLogic {
 			$percentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-percent');
 			$percentCmd->setConfiguration('value',$percent);
 			$percentCmd->save();
-			$percentCmd->checkAndUpdateCmd($percent);
+			$percentCmd->event($percent);
 			log::add('stock', 'debug', 'setPercent : ' . $percent);
 		}
 	}
@@ -117,7 +117,7 @@ class stock extends eqLogic {
 	public function rmStock($value) {
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		//if price != 0, calculate a cost
-		if ($priceCmd->getConfiguration('value') != 0) {
+		if ($priceCmd->getConfiguration('value') != '0') {
 			$this->calCost($value);
 		}
 		log::add('stock', 'debug', 'rmStock : ' . $value);
@@ -146,7 +146,7 @@ class stock extends eqLogic {
 		}
 		$stockCmd->setConfiguration('value', $newstock);
 		$stockCmd->save();
-		$stockCmd->checkAndUpdateCmd($newstock);
+		$stockCmd->event($newstock);
 		log::add('stock', 'debug', 'newStock : ' . $value . ' ' . $op);
 		$this->setPercent();
 	}
@@ -157,7 +157,7 @@ class stock extends eqLogic {
 		$conso = $value + $consoCmd->getConfiguration('value');
 		$consoCmd->setConfiguration('value', $conso);
 		$consoCmd->save();
-		$consoCmd->checkAndUpdateCmd($conso);
+		$consoCmd->event($conso);
 		log::add('stock', 'debug', 'newConso : ' . $value . ' ' . $conso);
 	}
 
@@ -172,7 +172,7 @@ class stock extends eqLogic {
 		}
 		$priceCmd->setConfiguration($value);
 		$priceCmd->save();
-		$priceCmd->checkAndUpdateCmd($value);
+		$priceCmd->event($value);
 		log::add('stock', 'debug', 'setPrice : ' . $value);
 	}
 
@@ -209,7 +209,7 @@ class stock extends eqLogic {
 		$priceCmd->save();
 		$consoCmd->setConfiguration('value', $price);
 		$consoCmd->save();
-		$consoCmd->checkAndUpdateCmd($price);
+		$consoCmd->event($price);
 		log::add('stock', 'debug', 'calCost : ' . $value . ' ' . $price);
 	}
 
@@ -219,7 +219,7 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration('value', $value);
 		$consoCmd->setConfiguration($histW, $value);
 		$consoCmd->save();
-		$consoCmd->checkAndUpdateCmd($value);
+		$consoCmd->event($value);
 		log::add('stock', 'debug', 'dailyDaily : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
@@ -233,7 +233,7 @@ class stock extends eqLogic {
 		}
 		$stockCmd->setConfiguration('value', $week);
 		$stockCmd->save();
-		$stockCmd->checkAndUpdateCmd($week);
+		$stockCmd->event($week);
 		log::add('stock', 'debug', 'dailyWeek : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
@@ -245,7 +245,7 @@ class stock extends eqLogic {
 			//début de semaine, on met la valeur à jour
 			$weekCmd->setConfiguration('value', $value);
 			$weekCmd->setConfiguration('inprogress', 0);
-			$weekCmd->checkAndUpdateCmd($value);
+			$weekCmd->event($value);
 		} else {
 			$weekCmd->setConfiguration('inprogress', $value);
 		}
@@ -261,7 +261,7 @@ class stock extends eqLogic {
 			//début de mois, on met la valeur à jour
 			$monthCmd->setConfiguration('value', $value);
 			$monthCmd->setConfiguration('inprogress', 0);
-			$monthCmd->checkAndUpdateCmd($value);
+			$monthCmd->event($value);
 		} else {
 			$weekCmd->setConfiguration('inprogress', $value);
 		}
@@ -307,9 +307,9 @@ class stockCmd extends cmd {
 			$eqLogic = $this->getEqLogic();
 			log::add('stock', 'debug', 'action : ' . $this->getConfiguration('id'));
 			if ($this->getConfiguration('id') == 'add1') {
-				$eqLogic->addStock(1);
+				$eqLogic->addStock('1');
 			} elseif ($this->getConfiguration('id') == 'minus1'){
-				$eqLogic->rmStock(1);
+				$eqLogic->rmStock('1');
 			} else {
 				if (is_numeric(trim($_options['title']))) {
 					switch ($this->getConfiguration('id')) {
