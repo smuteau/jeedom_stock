@@ -48,21 +48,21 @@ class stock extends eqLogic {
 		}
 	}
 
-	public function checkCmdOk($id, $type, $name, $subtype, $visible, $template) {
-		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),$type . '-' . $id);
+	public function checkCmdOk($_id, $_type, $_name, $_subtype, $_visible, $_template) {
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),$_type . '-' . $_id);
 		if (!is_object($stockCmd)) {
-			log::add('stock', 'debug', 'Création de la commande ' . $type . '-' . $id);
+			log::add('stock', 'debug', 'Création de la commande ' . $_type . '-' . $_id);
 			$stockCmd = new stockCmd();
-			$stockCmd->setName(__($name, __FILE__));
+			$stockCmd->setName(__($_name, __FILE__));
 			$stockCmd->setEqLogic_id($this->id);
 			$stockCmd->setEqType('stock');
-			$stockCmd->setLogicalId($type . '-' . $id);
-			if ($subtype == 'numeric') {
+			$stockCmd->setLogicalId($_type . '-' . $_id);
+			if ($_subtype == 'numeric') {
 				$stockCmd->setType('info');
 				$stockCmd->setSubType('numeric');
 			} else {
 				$stockCmd->setType('action');
-				if ($subtype == 'other') {
+				if ($_subtype == 'other') {
 					$stockCmd->setSubType('other');
 				} else {
 					$stockCmd->setSubType('message');
@@ -70,20 +70,22 @@ class stock extends eqLogic {
 			}
 			$stockCmd->setConfiguration('inprogress', '0');
 			$stockCmd->setConfiguration('value', '0');
-			$stockCmd->setConfiguration('type', $type);
-			$stockCmd->setConfiguration('id', $id);
-			if ($subtype == 'numeric') {
+			$stockCmd->setConfiguration('type', $_type);
+			$stockCmd->setConfiguration('id', $_id);
+			if ($_subtype == 'numeric') {
 				$stockCmd->setIsHistorized('1');
 			}
-			if ($visible == '1') {
+			if ($_visible == '1') {
 				$stockCmd->setIsVisible('1');
+			} else {
+				$stockCmd->setIsVisible('0');
 			}
-			if ($template != 'none') {
-				$stockCmd->setTemplate("mobile",$template );
-	      $stockCmd->setTemplate("dashboard",$template );
+			if ($_template != 'none') {
+				$stockCmd->setTemplate("mobile",$_template );
+	      $stockCmd->setTemplate("dashboard",$_template );
 			}
 			$stockCmd->save();
-			if ($subtype == 'numeric') {
+			if ($_subtype == 'numeric') {
 				$stockCmd->event('0');
 			}
 		}
