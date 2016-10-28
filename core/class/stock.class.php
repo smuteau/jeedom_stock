@@ -170,7 +170,7 @@ class stock extends eqLogic {
 			$list[] = array('price' => $value, 'stock', $stockCmd->getConfiguration('value'));
 			$priceCmd->setConfiguration('list',json_encode($list));
 		}
-		$priceCmd->setConfiguration($value);
+		$priceCmd->setConfiguration('value',$value);
 		$priceCmd->save();
 		$priceCmd->event($value);
 		log::add('stock', 'debug', 'setPrice : ' . $value);
