@@ -86,7 +86,7 @@ class stock extends eqLogic {
 			}
 			$stockCmd->save();
 			if ($_subtype == 'numeric') {
-				$stockCmd->event('0');
+				$stockCmd->event('0.0');
 			}
 		}
 	}
