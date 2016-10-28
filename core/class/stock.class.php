@@ -299,7 +299,7 @@ class stockCmd extends cmd {
 	}
 
 	public function execute($_options = null) {
-		log::add('stock', 'debug', 'execute : ' . $this->getConfiguration('id') . ' ' . $this->getConfiguration('type') . ' ' . $this->getLogicalId());
+		log::add('stock', 'debug', 'execute : ' . $this->getType() . ' ' . $this->getConfiguration('id') . ' ' . $this->getConfiguration('type') . ' ' . $this->getLogicalId());
 		if ($this->getType() == 'info') {
 			return $this->getConfiguration('value');
 			log::add('stock', 'debug', 'info : ' . $this->getConfiguration('value'));
