@@ -178,7 +178,7 @@ class stock extends eqLogic {
 
 	public function addPrice($value) {
 		//adding an element to list of prices
-		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'stock-price');
+		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		$list = json_decode($priceCmd->getConfiguration('list'));
 		$list[] = array('price' => $priceCmd->getConfiguration('value'), 'stock' => $value);
 		$priceCmd->setConfiguration('list',json_encode($list));
@@ -187,7 +187,7 @@ class stock extends eqLogic {
 	}
 
 	public function calCost($value) {
-		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'stock-price');
+		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'price-current');
 		//do some calculation from list values
 		$list = json_decode($priceCmd->getConfiguration('list'));
@@ -215,7 +215,7 @@ class stock extends eqLogic {
 
 	public function dailyDaily($type,$value,$histW) {
 		//save value on daily
-		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(), $type.'-daily');
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), $type.'-daily');
 		$consoCmd->setConfiguration('value', $value);
 		$consoCmd->setConfiguration($histW, $value);
 		$consoCmd->save();
@@ -225,8 +225,8 @@ class stock extends eqLogic {
 
 	public function dailyWeek($type) {
 		//save value on weeklyCountinuous
-		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(), $type.'-weeklyCountinuous');
-		$currentCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(), $type.'-current');
+		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), $type.'-weeklyCountinuous');
+		$currentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), $type.'-current');
 		$week = 0;
 		for ($i=1; $i < 8; $i++) {
 			$week = $week + $currentCmd->getConfiguration('W'.$i);
@@ -281,7 +281,7 @@ class stock extends eqLogic {
 		$histM = date("n");
 		foreach (array('conso','price') as $type) {
 			log::add('stock', 'debug', 'dailyStock : ' . $type);
-			$currentCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(), $type.'-current');
+			$currentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), $type.'-current');
 			$value = $currentCmd->getConfiguration('value');
 			$this->dailyDaily($type,$value,$histW);
 			$this->dailyWeek($type);
