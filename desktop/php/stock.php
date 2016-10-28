@@ -214,7 +214,7 @@ $eqLogics = eqLogic::byType('stock');
 </table>
 </div>
 <div role="tabpanel" class="tab-pane" id="statustab">
-<table id="table_conso" class="table table-bordered table-condensed">
+<table id="table_status" class="table table-bordered table-condensed">
 <thead>
   <tr>
     <th style="width: 50px;">#</th>
