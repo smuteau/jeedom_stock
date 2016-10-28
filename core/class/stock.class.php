@@ -86,7 +86,7 @@ class stock extends eqLogic {
 			}
 			$stockCmd->save();
 			if ($_subtype == 'numeric') {
-				$stockCmd->event('0.0');
+				$stockCmd->checkAndUpdateCmd('0.0');
 			}
 		}
 	}
@@ -99,7 +99,7 @@ class stock extends eqLogic {
 			$percentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-percent');
 			$percentCmd->setConfiguration('value',$percent);
 			$percentCmd->save();
-			$percentCmd->event($percent);
+			$percentCmd->checkAndUpdateCmd($percent);
 			log::add('stock', 'debug', 'setPercent : ' . $percent);
 		}
 	}
@@ -110,8 +110,8 @@ class stock extends eqLogic {
 		if ($priceCmd->getConfiguration('value') != 0) {
 			$this->addPrice($value);
 		}
-		$this->newStock(1,$value);
 		log::add('stock', 'debug', 'addStock : ' . $value);
+		$this->newStock(1,$value);
 	}
 
 	public function rmStock($value) {
@@ -120,18 +120,18 @@ class stock extends eqLogic {
 		if ($priceCmd->getConfiguration('value') != 0) {
 			$this->calCost($value);
 		}
+		log::add('stock', 'debug', 'rmStock : ' . $value);
 		$this->newConso($value);
 		$this->newStock(0,$value);
-		log::add('stock', 'debug', 'rmStock : ' . $value);
 	}
 
 	public function setStock($value) {
 		//calcultate if it's a add or rm Stock
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
+		log::add('stock', 'debug', 'setStock : ' . $value);
 		if ($value > $stockCmd->getConfiguration('value')) {
-			$this->addStock($value - $stockCmd->getConfiguration('value'));
+			log::add('stock', 'debug', 'setStock : ' . $value);
 		} else {
-			$this->rmStock($stockCmd->getConfiguration('value') - $value);
 			log::add('stock', 'debug', 'setStock : ' . $value);
 		}
 	}
@@ -146,9 +146,9 @@ class stock extends eqLogic {
 		}
 		$stockCmd->setConfiguration('value', $newstock);
 		$stockCmd->save();
-		$stockCmd->event($newstock);
-		$this->setPercent();
+		$stockCmd->checkAndUpdateCmd($newstock);
 		log::add('stock', 'debug', 'newStock : ' . $value . ' ' . $op);
+		$this->setPercent();
 	}
 
 	public function newConso($value) {
@@ -157,7 +157,7 @@ class stock extends eqLogic {
 		$conso = $value + $consoCmd->getConfiguration('value');
 		$consoCmd->setConfiguration('value', $conso);
 		$consoCmd->save();
-		$consoCmd->event($conso);
+		$consoCmd->checkAndUpdateCmd($conso);
 		log::add('stock', 'debug', 'newConso : ' . $value . ' ' . $conso);
 	}
 
@@ -172,7 +172,7 @@ class stock extends eqLogic {
 		}
 		$priceCmd->setConfiguration($value);
 		$priceCmd->save();
-		$priceCmd->event($value);
+		$priceCmd->checkAndUpdateCmd($value);
 		log::add('stock', 'debug', 'setPrice : ' . $value);
 	}
 
@@ -209,7 +209,7 @@ class stock extends eqLogic {
 		$priceCmd->save();
 		$consoCmd->setConfiguration('value', $price);
 		$consoCmd->save();
-		$consoCmd->event($price);
+		$consoCmd->checkAndUpdateCmd($price);
 		log::add('stock', 'debug', 'calCost : ' . $value . ' ' . $price);
 	}
 
@@ -219,7 +219,7 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration('value', $value);
 		$consoCmd->setConfiguration($histW, $value);
 		$consoCmd->save();
-		$consoCmd->event($value);
+		$consoCmd->checkAndUpdateCmd($value);
 		log::add('stock', 'debug', 'dailyDaily : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
@@ -233,7 +233,7 @@ class stock extends eqLogic {
 		}
 		$stockCmd->setConfiguration('value', $week);
 		$stockCmd->save();
-		$stockCmd->event($week);
+		$stockCmd->checkAndUpdateCmd($week);
 		log::add('stock', 'debug', 'dailyWeek : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
@@ -245,7 +245,7 @@ class stock extends eqLogic {
 			//début de semaine, on met la valeur à jour
 			$weekCmd->setConfiguration('value', $value);
 			$weekCmd->setConfiguration('inprogress', 0);
-			$weekCmd->event($value);
+			$weekCmd->checkAndUpdateCmd($value);
 		} else {
 			$weekCmd->setConfiguration('inprogress', $value);
 		}
@@ -261,7 +261,7 @@ class stock extends eqLogic {
 			//début de mois, on met la valeur à jour
 			$monthCmd->setConfiguration('value', $value);
 			$monthCmd->setConfiguration('inprogress', 0);
-			$monthCmd->event($value);
+			$monthCmd->checkAndUpdateCmd($value);
 		} else {
 			$weekCmd->setConfiguration('inprogress', $value);
 		}
