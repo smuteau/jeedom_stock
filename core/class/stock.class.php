@@ -70,7 +70,7 @@ class stock extends eqLogic {
 			}
 			$stockCmd->setConfiguration('inprogress', '0');
 			$stockCmd->setConfiguration('value', '0');
-			$stockCmd->setConfiguration('type', $_type);
+			$stockCmd->setConfiguration('category', $_type);
 			$stockCmd->setConfiguration('id', $_id);
 			if ($_subtype == 'numeric') {
 				$stockCmd->setIsHistorized('1');

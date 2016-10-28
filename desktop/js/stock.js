@@ -37,13 +37,13 @@ function addCmdToTable(_cmd) {
   }
   tr += '</tr>';
 
-  if (_cmd.configuration.type == 'conso') {
+  if (_cmd.configuration.category == 'conso') {
     $('#table_conso tbody').append(tr);
     var tr = $('#table_conso tbody tr:last');
-  } else if (_cmd.configuration.type == 'price') {
+  } else if (_cmd.configuration.category == 'price') {
     $('#table_price tbody').append(tr);
     var tr = $('#table_price tbody tr:last');
-  } else if (_cmd.configuration.type == 'stock') {
+  } else if (_cmd.configuration.category == 'stock') {
     $('#table_status tbody').append(tr);
     var tr = $('#table_status tbody tr:last');
   } else {
