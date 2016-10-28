@@ -305,15 +305,15 @@ class stockCmd extends cmd {
 			log::add('stock', 'debug', 'info : ' . $this->getConfiguration('value'));
 		} else {
 			$eqLogic = $this->getEqLogic();
-			log::add('stock', 'debug', 'info : ' . $this->getConfiguration('id'));
-			if ($this->getConfiguration('id') == 'plus1') {
+			log::add('stock', 'debug', 'action : ' . $this->getConfiguration('id'));
+			if ($this->getConfiguration('id') == 'add1') {
 				$eqLogic->addStock(1);
 			} elseif ($this->getConfiguration('id') == 'minus1'){
 				$eqLogic->rmStock(1);
 			} else {
 				if (is_numeric(trim($_options['title']))) {
 					switch ($this->getConfiguration('id')) {
-						case 'plusx':
+						case 'addx':
 						$eqLogic->addStock(trim($_options['title']));
 						break;
 						case 'minusx':
