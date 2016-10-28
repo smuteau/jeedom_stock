@@ -20,25 +20,25 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class stock extends eqLogic {
 	public function postUpdate() {
 		//('idcmd', 'typecmd', 'namecmd', 'subtypecmd', 'visible', 'template')
-		$this->checkCmdOk('add1', 'action', 'Ajouter 1', 'other', 1, 'none');
-		$this->checkCmdOk('minus1', 'action', 'Enlever 1', 'other', 1, 'none');
-		$this->checkCmdOk('addx', 'action', 'Ajouter X', 'message', 1, 'none');
-		$this->checkCmdOk('minusx', 'action', 'Enlever X', 'message', 1, 'none');
-		$this->checkCmdOk('stock', 'action', 'Définir stock', 'message', 1, 'none');
-		$this->checkCmdOk('price', 'action', 'Définir prix', 'message', 1, 'none');
-		$this->checkCmdOk('stock', 'stock', 'Stock actuel', 'numeric', 1, 'badge');
-		$this->checkCmdOk('percent', 'stock', 'Pourcentage', 'numeric', 1, 'badge');
-		$this->checkCmdOk('price', 'stock', 'Prix actuel', 'numeric', 1, 'badge');
-		$this->checkCmdOk('current', 'conso', 'Quantité du jour', 'numeric', 1, 'badge');
-		$this->checkCmdOk('daily', 'conso', 'Quantité veille', 'numeric', 1, 'badge');
-		$this->checkCmdOk('monthly', 'conso', 'Quantité mensuel', 'numeric', 0, 'badge');
-		$this->checkCmdOk('weekly', 'conso', 'Quantité hebdomadaire', 'numeric', 0, 'badge');
-		$this->checkCmdOk('weeklyCountinuous', 'conso', 'Quantité hebdomadaire continue', 'numeric', 0, 'badge');
-		$this->checkCmdOk('current', 'price', 'Coût du jour', 'numeric', 0, 'badge');
-		$this->checkCmdOk('daily', 'price', 'Coût veille', 'numeric', 0, 'badge');
-		$this->checkCmdOk('monthly', 'price', 'Coût mensuel', 'numeric', 0, 'badge');
-		$this->checkCmdOk('weekly', 'price', 'Coût hebdomadaire', 'numeric', 0, 'badge');
-		$this->checkCmdOk('weeklyCountinuous', 'price', 'Coût hebdomadaire continu', 'numeric', 0, 'badge');
+		$this->checkCmdOk('add1', 'action', 'Ajouter 1', 'other', '1', 'none');
+		$this->checkCmdOk('minus1', 'action', 'Enlever 1', 'other', '1', 'none');
+		$this->checkCmdOk('addx', 'action', 'Ajouter X', 'message', '1', 'none');
+		$this->checkCmdOk('minusx', 'action', 'Enlever X', 'message', '1', 'none');
+		$this->checkCmdOk('stock', 'action', 'Définir stock', 'message', '1', 'none');
+		$this->checkCmdOk('price', 'action', 'Définir prix', 'message', '1', 'none');
+		$this->checkCmdOk('stock', 'stock', 'Stock actuel', 'numeric', '1', 'badge');
+		$this->checkCmdOk('percent', 'stock', 'Pourcentage', 'numeric', '1', 'badge');
+		$this->checkCmdOk('price', 'stock', 'Prix actuel', 'numeric', '1', 'badge');
+		$this->checkCmdOk('current', 'conso', 'Quantité du jour', 'numeric', '1', 'badge');
+		$this->checkCmdOk('daily', 'conso', 'Quantité veille', 'numeric', '1', 'badge');
+		$this->checkCmdOk('monthly', 'conso', 'Quantité mensuel', 'numeric', '0', 'badge');
+		$this->checkCmdOk('weekly', 'conso', 'Quantité hebdomadaire', 'numeric', '0', 'badge');
+		$this->checkCmdOk('weeklyCountinuous', 'conso', 'Quantité hebdomadaire continue', 'numeric', '0', 'badge');
+		$this->checkCmdOk('current', 'price', 'Coût du jour', 'numeric', '0', 'badge');
+		$this->checkCmdOk('daily', 'price', 'Coût veille', 'numeric', '0', 'badge');
+		$this->checkCmdOk('monthly', 'price', 'Coût mensuel', 'numeric', '0', 'badge');
+		$this->checkCmdOk('weekly', 'price', 'Coût hebdomadaire', 'numeric', '0', 'badge');
+		$this->checkCmdOk('weeklyCountinuous', 'price', 'Coût hebdomadaire continu', 'numeric', '0', 'badge');
 	}
 
 	public function cronDaily() {
@@ -68,15 +68,15 @@ class stock extends eqLogic {
 					$stockCmd->setSubType('message');
 				}
 			}
-			$stockCmd->setConfiguration('inprogress', 0);
-			$stockCmd->setConfiguration('value', 0);
+			$stockCmd->setConfiguration('inprogress', '0');
+			$stockCmd->setConfiguration('value', '0');
 			$stockCmd->setConfiguration('type', $type);
 			$stockCmd->setConfiguration('id', $id);
 			if ($subtype == 'numeric') {
-				$stockCmd->setIsHistorized(1);
+				$stockCmd->setIsHistorized('1');
 			}
-			if ($visible == 1) {
-				$stockCmd->setIsVisible(1);
+			if ($visible == '1') {
+				$stockCmd->setIsVisible('1');
 			}
 			if ($template != 'none') {
 				$stockCmd->setTemplate("mobile",$template );
@@ -84,7 +84,7 @@ class stock extends eqLogic {
 			}
 			$stockCmd->save();
 			if ($subtype == 'numeric') {
-				$stockCmd->event(0);
+				$stockCmd->event('0');
 			}
 		}
 	}
@@ -98,6 +98,7 @@ class stock extends eqLogic {
 			$percentCmd->setConfiguration('value',$percent);
 			$percentCmd->save();
 			$percentCmd->event($percent);
+			log::add('stock', 'debug', 'setPercent : ' . $percent);
 		}
 	}
 
@@ -108,6 +109,7 @@ class stock extends eqLogic {
 			$this->addPrice($value);
 		}
 		$this->newStock(1,$value);
+		log::add('stock', 'debug', 'addStock : ' . $value);
 	}
 
 	public function rmStock($value) {
@@ -118,6 +120,7 @@ class stock extends eqLogic {
 		}
 		$this->newConso($value);
 		$this->newStock(0,$value);
+		log::add('stock', 'debug', 'rmStock : ' . $value);
 	}
 
 	public function setStock($value) {
@@ -127,6 +130,7 @@ class stock extends eqLogic {
 			$this->addStock($value - $stockCmd->getConfiguration('value'));
 		} else {
 			$this->rmStock($stockCmd->getConfiguration('value') - $value);
+			log::add('stock', 'debug', 'setStock : ' . $value);
 		}
 	}
 
@@ -142,6 +146,7 @@ class stock extends eqLogic {
 		$stockCmd->save();
 		$stockCmd->event($newstock);
 		$this->setPercent();
+		log::add('stock', 'debug', 'newStock : ' . $value . ' ' . $op);
 	}
 
 	public function newConso($value) {
@@ -151,6 +156,7 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration('value', $conso);
 		$consoCmd->save();
 		$consoCmd->event($conso);
+		log::add('stock', 'debug', 'newConso : ' . $value . ' ' . $conso);
 	}
 
 	public function setPrice($value) {
@@ -165,6 +171,7 @@ class stock extends eqLogic {
 		$priceCmd->setConfiguration($value);
 		$priceCmd->save();
 		$priceCmd->event($value);
+		log::add('stock', 'debug', 'setPrice : ' . $value);
 	}
 
 	public function addPrice($value) {
@@ -174,6 +181,7 @@ class stock extends eqLogic {
 		$list[] = array('price' => $priceCmd->getConfiguration('value'), 'stock' => $value);
 		$priceCmd->setConfiguration('list',json_encode($list));
 		$priceCmd->save();
+		log::add('stock', 'debug', 'addPrice : ' . $value);
 	}
 
 	public function calCost($value) {
@@ -200,6 +208,7 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration('value', $price);
 		$consoCmd->save();
 		$consoCmd->event($price);
+		log::add('stock', 'debug', 'calCost : ' . $value . ' ' . $price);
 	}
 
 	public function dailyDaily($type,$value,$histW) {
@@ -209,6 +218,7 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration($histW, $value);
 		$consoCmd->save();
 		$consoCmd->event($value);
+		log::add('stock', 'debug', 'dailyDaily : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
 	public function dailyWeek($type) {
@@ -222,6 +232,7 @@ class stock extends eqLogic {
 		$stockCmd->setConfiguration('value', $week);
 		$stockCmd->save();
 		$stockCmd->event($week);
+		log::add('stock', 'debug', 'dailyWeek : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
 	public function dailyWeekly($type,$value,$histW) {
@@ -237,6 +248,7 @@ class stock extends eqLogic {
 			$weekCmd->setConfiguration('inprogress', $value);
 		}
 		$weekCmd->save();
+		log::add('stock', 'debug', 'dailyWeekly : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
 	public function dailyMonthly($type,$value,$histM) {
@@ -252,6 +264,7 @@ class stock extends eqLogic {
 			$weekCmd->setConfiguration('inprogress', $value);
 		}
 		$weekCmd->save();
+		log::add('stock', 'debug', 'dailyMonthly : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
 	public function dailyStock() {
@@ -265,6 +278,7 @@ class stock extends eqLogic {
 		}
 		$histM = date("n");
 		foreach (array('conso','price') as $type) {
+			log::add('stock', 'debug', 'dailyStock : ' . $type);
 			$currentCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(), $type.'-current');
 			$value = $currentCmd->getConfiguration('value');
 			$this->dailyDaily($type,$value,$histW);
@@ -286,8 +300,10 @@ class stockCmd extends cmd {
 		log::add('stock', 'debug', 'execute : ' . $this->getConfiguration('id') . ' ' . $this->getConfiguration('type') . ' ' . $this->getLogicalId());
 		if ($this->getType() == 'info') {
 			return $this->getConfiguration('value');
+			log::add('stock', 'debug', 'info : ' . $this->getConfiguration('value'));
 		} else {
 			$eqLogic = $this->getEqLogic();
+			log::add('stock', 'debug', 'info : ' . $this->getConfiguration('id'));
 			if ($this->getConfiguration('id') == 'plus1') {
 				$eqLogic->addStock(1);
 			} elseif ($this->getConfiguration('id') == 'minus1'){
