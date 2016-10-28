@@ -165,7 +165,7 @@ class stock extends eqLogic {
 		//set actual price (value + event)
 		//if before = 0, then create list with actual stock, else nothing on list
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($eqLogic->getId(),'stock-price');
-		if ($priceCmd->getConfiguration('value') == 0) {
+		if ($priceCmd->getConfiguration('value') == '0') {
 			$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
 			$list[] = array('price' => $value, 'stock', $stockCmd->getConfiguration('value'));
 			$priceCmd->setConfiguration('list',json_encode($list));
