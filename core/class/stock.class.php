@@ -281,15 +281,20 @@ class stock extends eqLogic {
 			$histW = 'W' . ($jourW - 1);
 		}
 		$histM = date("n");
-		foreach (array('conso','price') as $type) {
-			log::add('stock', 'debug', 'dailyStock : ' . $type);
-			$currentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), $type.'-current');
-			$value = $currentCmd->getConfiguration('value');
-			$this->dailyDaily($type,$value,$histW);
-			$this->dailyWeek($type);
-			$this->dailyWeekly($type,$value,$histW);
-			$this->dailyMonthly($type,$value,$histM);
-		}
+		log::add('stock', 'debug', 'dailyStock : conso');
+		$currentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), 'conso-current');
+		$value = $currentCmd->getConfiguration('value');
+		$this->dailyDaily('conso',$value,$histW);
+		$this->dailyWeek('conso');
+		$this->dailyWeekly('conso',$value,$histW);
+		$this->dailyMonthly('conso',$value,$histM);
+		log::add('stock', 'debug', 'dailyStock : price');
+		$currentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), 'price-current');
+		$value = $currentCmd->getConfiguration('value');
+		$this->dailyDaily('price',$value,$histW);
+		$this->dailyWeek('price');
+		$this->dailyWeekly('price',$value,$histW);
+		$this->dailyMonthly('price',$value,$histM);
 	}
 }
 
