@@ -191,6 +191,7 @@ class stock extends eqLogic {
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'price-current');
 		//do some calculation from list values
 		$list = json_decode($priceCmd->getConfiguration('list'), true);
+		log::add('stock', 'debug', 'price : ' . print_r($list,true));
 		$test = 1;
 		$price = 0;
 		while ($test == 1) {
