@@ -192,6 +192,7 @@ class stock extends eqLogic {
 		//do some calculation from list values
 		$list = json_decode($priceCmd->getConfiguration('list'), true);
 		log::add('stock', 'debug', 'price : ' . print_r($list,true));
+		var_dump($priceCmd->getConfiguration('list'));
 		$test = 1;
 		$price = 0;
 		while ($test == 1) {
