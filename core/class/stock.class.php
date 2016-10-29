@@ -179,7 +179,12 @@ class stock extends eqLogic {
 	public function addPrice($value) {
 		//adding an element to list of prices
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
-		$list = json_decode($priceCmd->getConfiguration('list', true));
+		$list = $priceCmd->getConfiguration('list');
+		if ($list == '') {
+			$list = array();
+		} else {
+			$list = json_decode($list, true);
+		}
 		$list[] = array('price' => $priceCmd->getConfiguration('value'), 'stock' => $value);
 		$priceCmd->setConfiguration('list',json_encode($list));
 		$priceCmd->save();
