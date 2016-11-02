@@ -223,10 +223,10 @@ class stock extends eqLogic {
 	public function dailyDaily($type,$value,$histW) {
 		//save value on daily
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), $type.'-daily');
-		$consoCmd->setConfiguration('value', $value);
-		$consoCmd->setConfiguration($histW, $value);
-		$consoCmd->save();
-		$consoCmd->event($value);
+		$stockCmd->setConfiguration('value', $value);
+		$stockCmd->setConfiguration($histW, $value);
+		$stockCmd->save();
+		$stockCmd->event($value);
 		log::add('stock', 'debug', 'dailyDaily : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
@@ -270,9 +270,9 @@ class stock extends eqLogic {
 			$monthCmd->setConfiguration('inprogress', 0);
 			$monthCmd->event($value);
 		} else {
-			$weekCmd->setConfiguration('inprogress', $value);
+			$monthCmd->setConfiguration('inprogress', $value);
 		}
-		$weekCmd->save();
+		$monthCmd->save();
 		log::add('stock', 'debug', 'dailyMonthly : ' . $type . ' ' . $value . ' ' . $histM);
 	}
 
