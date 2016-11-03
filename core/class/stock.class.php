@@ -293,6 +293,9 @@ class stock extends eqLogic {
 		$this->dailyWeek('conso');
 		$this->dailyWeekly('conso',$value,$histW);
 		$this->dailyMonthly('conso',$value,$histM);
+        $currentCmd->setConfiguration('value','0');
+        $currentCmd->save();
+        $currentCmd->event('0');
 		log::add('stock', 'debug', 'dailyStock : price');
 		$currentCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(), 'price-current');
 		$value = $currentCmd->getConfiguration('value');
@@ -300,6 +303,9 @@ class stock extends eqLogic {
 		$this->dailyWeek('price');
 		$this->dailyWeekly('price',$value,$histW);
 		$this->dailyMonthly('price',$value,$histM);
+        $currentCmd->setConfiguration('value','0');
+        $currentCmd->save();
+        $currentCmd->event('0');
 	}
 }
 
