@@ -177,6 +177,9 @@ class stock extends eqLogic {
 
 	public function addPrice($value, $stock) {
 		//adding an element to list of prices
+        if (!file_exists(dirname(__FILE__) . '/../../data')) {
+			mkdir(dirname(__FILE__) . '/../../data');
+		}
         $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
 		if (!file($price_path)) {
             $myfile = fopen($price_path, "w+");
