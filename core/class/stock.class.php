@@ -182,6 +182,7 @@ class stock extends eqLogic {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
         $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
+        log::add('stock', 'debug', 'file : ' . $price_path);
 		if (!file($price_path)) {
             $myfile = fopen($price_path, "w") or die("Unable to create file!");
         } else {
