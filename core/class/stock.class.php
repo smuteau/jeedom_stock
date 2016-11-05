@@ -130,9 +130,9 @@ class stock extends eqLogic {
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
 		log::add('stock', 'debug', 'setStock : ' . $value);
 		if ($value > $stockCmd->getConfiguration('value')) {
-			log::add('stock', 'debug', 'setStock : ' . $value);
+            $this->addStock($value - $stockCmd->getConfiguration('value'));
 		} else {
-			log::add('stock', 'debug', 'setStock : ' . $value);
+			$this->addStock($stockCmd->getConfiguration('value') - $value);
 		}
 	}
 
