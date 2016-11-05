@@ -120,7 +120,7 @@ class stock extends eqLogic {
 		if ($priceCmd->getConfiguration('value') != '0') {
 			$this->calCost($value);
 		}
-		log::add('stock', 'debug', 'rmStock : ' . $value);
+		log::add('stock', 'debug', 'rmStock : remove ' . $value);
 		$this->newConso($value);
 		$this->newStock(0,$value);
 	}
@@ -128,7 +128,7 @@ class stock extends eqLogic {
 	public function setStock($value) {
 		//calcultate if it's a add or rm Stock
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
-		log::add('stock', 'debug', 'setStock : ' . $value);
+		log::add('stock', 'debug', 'setStock : value ' . $value);
 		if ($value > $stockCmd->getConfiguration('value')) {
             $this->addStock($value - $stockCmd->getConfiguration('value'));
 		} else {
@@ -138,6 +138,7 @@ class stock extends eqLogic {
 
 	public function newStock($op, $value) {
 		//change value of stock
+        log::add('stock', 'debug', 'newStock : op ' . $op . ' value ' . $value);
 		$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
 		if ($op) {
 			$newstock = $stockCmd->getConfiguration('value') + $value;
@@ -147,7 +148,6 @@ class stock extends eqLogic {
 		$stockCmd->setConfiguration('value', $newstock);
 		$stockCmd->save();
 		$stockCmd->event($newstock);
-		log::add('stock', 'debug', 'newStock : ' . $value . ' ' . $op);
 		$this->setPercent();
 	}
 
@@ -164,6 +164,7 @@ class stock extends eqLogic {
 	public function setPrice($value) {
 		//set actual price (value + event)
 		//if before = 0, then create list with actual stock, else nothing on list
+        log::add('stock', 'debug', 'setPrice : ' . $value);
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		if ($priceCmd->getConfiguration('value') == '0') {
 			$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
@@ -172,12 +173,11 @@ class stock extends eqLogic {
 		$priceCmd->setConfiguration('value',$value);
 		$priceCmd->save();
 		$priceCmd->event($value);
-		log::add('stock', 'debug', 'setPrice : ' . $value);
 	}
 
 	public function addPrice($value, $stock) {
 		//adding an element to list of prices
-        log::add('stock', 'debug', 'addPrice : ' . $value . ' ' . $stock);
+        log::add('stock', 'debug', 'addPrice : ' . $value . ' for stock ' . $stock);
         if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
@@ -199,18 +199,23 @@ class stock extends eqLogic {
         if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
+        log::add('stock', 'debug', 'calCost : stock ' . $value);
         $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "r");
         while(!feof($myfile)) {
           if (0 < $value) {
               $list = explode(':',fgets($myfile));
+              log::add('stock', 'debug', 'calCost : line ' . $list[0] . ' ' . $list[1]);
               if ($list[0] > $value) {
                   $list[0] = $list[0] - $value;//new stock value
                   $add = $value * $list[1];//calculate price
+                  $value = 0;
                   $finalfile .= $value . ':' . $list[1] . '\n'; // line to record for new prices
+                  log::add('stock', 'debug', 'calCost : calcul final ' . $value . ' ' . $finalfile);
               } else {
                   $add = $list[0] * $list[1]; //price of this stock
                   $value = $value - $list[0];//remove that stock from the total
                   //we don't keep this line for new file
+                  log::add('stock', 'debug', 'calCost : line ' . $value . ' ' . $list[0] . ' ' . $list[1]);
               }
               $price = $price + $add;
           }
@@ -223,7 +228,7 @@ class stock extends eqLogic {
 		$consoCmd->setConfiguration('value', $price);
 		$consoCmd->save();
 		$consoCmd->event($price);
-		log::add('stock', 'debug', 'calCost : ' . $value . ' ' . $price);
+		log::add('stock', 'debug', 'calCost : end ' . $value . ' ' . $price);
 	}
 
 	public function dailyDaily($type,$value,$histW) {
