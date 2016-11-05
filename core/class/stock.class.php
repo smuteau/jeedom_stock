@@ -181,12 +181,11 @@ class stock extends eqLogic {
         if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
-        $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
-        log::add('stock', 'debug', 'file : ' . $price_path);
-		if (!file($price_path)) {
-            $myfile = fopen($price_path, "w") or die("Unable to create file!");
+        log::add('stock', 'debug', 'file : ' . dirname(__FILE__) . '/../../data/price.conf');
+		if (!file(dirname(__FILE__) . '/../../data/price.conf')) {
+            $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "w") or die("Unable to create file!");
         } else {
-            $myfile = fopen($price_path, "a") or die("Unable to open file!");
+            $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "a") or die("Unable to open file!");
         }
         fwrite($myfile, $stock . ':' . $value . '\n');
         fclose($myfile);
