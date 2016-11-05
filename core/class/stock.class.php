@@ -199,8 +199,7 @@ class stock extends eqLogic {
         if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
-        $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
-        $myfile = fopen($price_path, "w+");
+        $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "r");
         while(!feof($myfile)) {
           if (0 < $value) {
               $list = explode(':',fgets($myfile));
@@ -217,6 +216,8 @@ class stock extends eqLogic {
           }
           $finalfile .= fgets($myfile) . '\n'; // line to record for new prices
         }
+        fclose($myfile);
+        $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "w+");
         fwrite($myfile, $finalfile);
         fclose($myfile);
 		$consoCmd->setConfiguration('value', $price);
