@@ -132,7 +132,7 @@ class stock extends eqLogic {
 		if ($value > $stockCmd->getConfiguration('value')) {
             $this->addStock($value - $stockCmd->getConfiguration('value'));
 		} else {
-			$this->addStock($stockCmd->getConfiguration('value') - $value);
+			$this->rmStock($stockCmd->getConfiguration('value') - $value);
 		}
 	}
 
