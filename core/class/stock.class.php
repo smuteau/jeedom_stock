@@ -108,7 +108,7 @@ class stock extends eqLogic {
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		//if price != 0, adding a list element
 		if ($priceCmd->getConfiguration('value') != 0) {
-			$this->addPrice($value);
+			$this->addPrice($priceCmd->getConfiguration('value'), $value);
 		}
 		log::add('stock', 'debug', 'addStock : ' . $value);
 		$this->newStock(1,$value);
@@ -167,8 +167,7 @@ class stock extends eqLogic {
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		if ($priceCmd->getConfiguration('value') == '0') {
 			$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
-			$list[] = array('price' => $value, 'stock', $stockCmd->getConfiguration('value'));
-			$priceCmd->setConfiguration('list',json_encode($list));
+			$this->addPrice($value, $stockCmd->getConfiguration('value'));
 		}
 		$priceCmd->setConfiguration('value',$value);
 		$priceCmd->save();
@@ -176,44 +175,44 @@ class stock extends eqLogic {
 		log::add('stock', 'debug', 'setPrice : ' . $value);
 	}
 
-	public function addPrice($value) {
+	public function addPrice($value, $stock) {
 		//adding an element to list of prices
-		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
-		$list = $priceCmd->getConfiguration('list');
-		if ($list == '') {
-			$list = array();
-		} else {
-			$list = json_decode($list, true);
-		}
-		$list[] = array('price' => $priceCmd->getConfiguration('value'), 'stock' => $value);
-		$priceCmd->setConfiguration('list',json_encode($list));
-		$priceCmd->save();
-		log::add('stock', 'debug', 'addPrice : ' . $value);
+        $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
+		if (!file($price_path)) {
+            $myfile = fopen($price_path, "w+");
+        } else {
+            $myfile = fopen($price_path, "a") or die("Unable to open file!");
+        }
+        fwrite($myfile, $stock . ':' . $value . '\n');
+        fclose($myfile);
+		log::add('stock', 'debug', 'addPrice : ' . $value . ' ' . $stock);
 	}
 
 	public function calCost($value) {
-		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
 		$consoCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'price-current');
 		//do some calculation from list values
-		$list = json_decode($priceCmd->getConfiguration('list'), true);
-		log::add('stock', 'debug', 'price : ' . print_r($list,true));
-		var_dump($priceCmd->getConfiguration('list'));
-		$test = 1;
 		$price = 0;
-		while ($test == 1) {
-			if ($list[0]['stock'] > $value) {
-				$list[0]['stock'] = $list[0]['stock'] - $value;
-				$add = $value * $list[0]['price'];
-				$test = 0;
-			} else {
-				$add = $list[0]['price'] * $list[0]['stock'];
-				$value = $value - $list[0]['stock'];
-				unset($list[0]);
-			}
-			$price = $price + $add;
-		}
-		$priceCmd->setConfiguration('list',json_encode($list));
-		$priceCmd->save();
+        $finalfile = '';
+        $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
+        $myfile = fopen($price_path, "w+");
+        while(!feof($myfile)) {
+          if (0 < $value) {
+              $list = explode(':',fgets($myfile));
+              if ($list[0] > $value) {
+                  $list[0] = $list[0] - $value;//new stock value
+                  $add = $value * $list[1];//calculate price
+                  $finalfile .= $value . ':' . $list[1] . '\n'; // line to record for new prices
+              } else {
+                  $add = $list[0] * $list[1]; //price of this stock
+                  $value = $value - $list[0];//remove that stock from the total
+                  //we don't keep this line for new file
+              }
+              $price = $price + $add;
+          }
+          $finalfile .= fgets($myfile) . '\n'; // line to record for new prices
+        }
+        fwrite($myfile, $finalfile);
+        fclose($myfile);
 		$consoCmd->setConfiguration('value', $price);
 		$consoCmd->save();
 		$consoCmd->event($price);
