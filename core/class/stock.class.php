@@ -196,6 +196,9 @@ class stock extends eqLogic {
 		//do some calculation from list values
 		$price = 0;
         $finalfile = '';
+        if (!file_exists(dirname(__FILE__) . '/../../data')) {
+			mkdir(dirname(__FILE__) . '/../../data');
+		}
         $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
         $myfile = fopen($price_path, "w+");
         while(!feof($myfile)) {
