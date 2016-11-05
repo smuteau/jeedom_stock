@@ -178,13 +178,12 @@ class stock extends eqLogic {
 	public function addPrice($value, $stock) {
 		//adding an element to list of prices
         log::add('stock', 'debug', 'addPrice : ' . $value . ' ' . $stock);
-        log::add('stock', 'debug', 'dir : ' . dirname(__FILE__) . '/../../data/price.conf');
         if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
         $price_path = realpath(dirname(__FILE__) . '/../../data/price.conf');
 		if (!file($price_path)) {
-            $myfile = fopen($price_path, "w+");
+            $myfile = fopen($price_path, "w") or die("Unable to create file!");
         } else {
             $myfile = fopen($price_path, "a") or die("Unable to open file!");
         }
