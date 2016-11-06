@@ -227,7 +227,7 @@ class stock extends eqLogic {
               }
               $price = $price + $add;
           }
-          $finalfile .= fgets($myfile) . '\n'; // line to record for new prices
+          $finalfile .= fgets($myfile) . PHP_EOL; // line to record for new prices
         }
         fclose($myfile);
         $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "w+");
