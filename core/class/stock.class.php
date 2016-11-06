@@ -216,7 +216,7 @@ class stock extends eqLogic {
               if ($list[0] > $value) {
                   $list[0] = $list[0] - $value;//new stock value
                   $add = $value * $list[1];//calculate price
-                  $finalfile .= $list[0] . ':' . $list[1] . PHP_EOL; // line to record for new prices
+                  $finalfile .= $list[0] . ':' . $list[1]; // line to record for new prices
                   $value = 0;
                   log::add('stock', 'debug', 'calCost : calcul final ' . $add . ' ' . $finalfile);
               } else {
@@ -233,6 +233,7 @@ class stock extends eqLogic {
         $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "w+");
         fwrite($myfile, $finalfile);
         fclose($myfile);
+        $price = $price + $consoCmd->getConfiguration('value');
 		$consoCmd->setConfiguration('value', $price);
 		$consoCmd->save();
 		$consoCmd->event($price);
