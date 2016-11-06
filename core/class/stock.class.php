@@ -216,9 +216,9 @@ class stock extends eqLogic {
               if ($list[0] > $value) {
                   $list[0] = $list[0] - $value;//new stock value
                   $add = $value * $list[1];//calculate price
+                  $finalfile .= $list[0] . ':' . $list[1] . PHP_EOL; // line to record for new prices
                   $value = 0;
-                  $finalfile .= $value . ':' . $list[1] . PHP_EOL; // line to record for new prices
-                  log::add('stock', 'debug', 'calCost : calcul final ' . $value . ' ' . $finalfile);
+                  log::add('stock', 'debug', 'calCost : calcul final ' . $add . ' ' . $finalfile);
               } else {
                   $add = $list[0] * $list[1]; //price of this stock
                   $value = $value - $list[0];//remove that stock from the total
