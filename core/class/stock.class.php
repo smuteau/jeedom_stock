@@ -166,9 +166,18 @@ class stock extends eqLogic {
 		//if before = 0, then create list with actual stock, else nothing on list
         log::add('stock', 'debug', 'setPrice : ' . $value);
 		$priceCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-price');
-		if ($priceCmd->getConfiguration('value') == '0') {
+		if ($priceCmd->getConfiguration('value') == '0' && $value != '0') {
 			$stockCmd = stockCmd::byEqLogicIdAndLogicalId($this->getId(),'stock-stock');
 			$this->addPrice($value, $stockCmd->getConfiguration('value'));
+		}
+        if ($value == '0') {
+            if (!file_exists(dirname(__FILE__) . '/../../data')) {
+    			mkdir(dirname(__FILE__) . '/../../data');
+    		}
+    		if (file(dirname(__FILE__) . '/../../data/price.conf')) {
+                $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "w+") or die("Unable to create file!");
+                fclose($myfile);
+            }
 		}
 		$priceCmd->setConfiguration('value',$value);
 		$priceCmd->save();
@@ -181,7 +190,6 @@ class stock extends eqLogic {
         if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
-        log::add('stock', 'debug', 'file : ' . dirname(__FILE__) . '/../../data/price.conf');
 		if (!file(dirname(__FILE__) . '/../../data/price.conf')) {
             $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "w") or die("Unable to create file!");
         } else {
