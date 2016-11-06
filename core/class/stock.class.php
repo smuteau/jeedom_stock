@@ -187,7 +187,7 @@ class stock extends eqLogic {
         } else {
             $myfile = fopen(dirname(__FILE__) . '/../../data/price.conf', "a") or die("Unable to open file!");
         }
-        fwrite($myfile, $stock . ':' . $value . '\n');
+        fwrite($myfile, $stock . ':' . $value . '\r');
         fclose($myfile);
 	}
 
@@ -209,7 +209,7 @@ class stock extends eqLogic {
                   $list[0] = $list[0] - $value;//new stock value
                   $add = $value * $list[1];//calculate price
                   $value = 0;
-                  $finalfile .= $value . ':' . $list[1] . '\n'; // line to record for new prices
+                  $finalfile .= $value . ':' . $list[1] . '\r'; // line to record for new prices
                   log::add('stock', 'debug', 'calCost : calcul final ' . $value . ' ' . $finalfile);
               } else {
                   $add = $list[0] * $list[1]; //price of this stock
