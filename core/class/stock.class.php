@@ -28,7 +28,7 @@ class stock extends eqLogic {
 		$this->checkCmdOk('price', 'action', 'Définir prix', 'message', '1', 'none');
 		$this->checkCmdOk('stock', 'stock', 'Stock actuel', 'numeric', '1', 'badge');
 		$this->checkCmdOk('percent', 'stock', 'Pourcentage', 'numeric', '1', 'badge');
-		$this->checkCmdOk('price', 'stock', 'Prix actuel', 'numeric', '1', 'badge');
+		$this->checkCmdOk('price', 'stock', 'Prix unitaire', 'numeric', '1', 'badge');
 		$this->checkCmdOk('current', 'conso', 'Quantité du jour', 'numeric', '1', 'badge');
 		$this->checkCmdOk('daily', 'conso', 'Quantité veille', 'numeric', '1', 'badge');
 		$this->checkCmdOk('monthly', 'conso', 'Quantité mensuel', 'numeric', '0', 'badge');
