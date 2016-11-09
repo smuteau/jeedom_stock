@@ -156,19 +156,19 @@ $eqLogics = eqLogic::byType('stock');
           <div class="form-group">
             <label class="col-sm-3 control-label">{{Notification sur consommation journalière supérieure à}}</label>
             <div class="col-sm-3">
-              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifDaily" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifDaily" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifié}}">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">{{Notification sur consommation hebdomadaire supérieure à}}</label>
             <div class="col-sm-3">
-              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifWeekly" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifWeekly" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifié}}">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">{{Notification sur consommation mensuelle supérieure à}}</label>
             <div class="col-sm-3">
-              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifWeekly" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifier}}">
+              <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifMonthly" type="text" placeholder="{{saisir la quantité pour laquelle vous serez notifié}}">
             </div>
           </div>
           <div class="form-group">
@@ -185,7 +185,7 @@ $eqLogics = eqLogic::byType('stock');
         <div class="form-group">
           <label class="col-sm-3 control-label">{{Commande à activer sur seuil atteint}}</label>
           <div class="col-sm-3">
-            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle la commande sera éxécuter}}">
+            <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notifStock" type="text" placeholder="{{saisir la quantité pour laquelle la commande sera exécutée}}">
           </div>
         </div>
 
