@@ -4,6 +4,16 @@ Le plugin ne comporte pas de configuration générale.
 
 Lorsque l'on créer un équipement on doit fournir les éléments suivant :
 
-  * API Key (sur le site Openpaths.cc)
-  * API Secret (sur le site Openpaths.cc)
-  * la commande geoloc qu'on souhaite mettre à jour à partir des données Openpaths
+  * Taille du stock
+
+  * Jour du début de la semaine
+
+  * Commande de notification
+
+  * Seuils de notification pour la consommation journalière, hebdomadaire, mensuelle
+
+  * Commande de seuil
+
+  * Seuil d'activation de la commande
+
+  

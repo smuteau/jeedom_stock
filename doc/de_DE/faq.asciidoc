@@ -1,5 +1,21 @@
 [panel,primary]
-.Est-ce que le plugin s'appuie sur des API tiers ?
+.Puis-je lier 2 stocks pour simuler par exemple un stock à la maison et un stock chez le fournisseur déjà acheté ?
 --
-Oui, le plugin récupère ses informations des serveurs d'Openpaths
+Oui, il faudra alors 2 équipements Stock. Puis les lier via un scénario.
+
+Deux possibilités :
+
+  - utiliser un virtuel qui enlèvera du stock "fournisseur" et ajoutera au stock "local" la même quantité.
+
+  - directement utiliser les commandes du stock fournisseur pour déclencher l'ajout au stock local (ne pas oublier les 2 commandes Enlever 1 et Enlever X, attention dans ce cas il ne faudra pas utiliser Définir le stock)
+
+Le scénario devra aussi basculer le nouveau prix si besoin sur le stock local.
+
+Une bonne solution peut être d'utiliser une fonction ask pour que jeedom vous demande si il y a eu un mouvement du stock fournisseur vers le stock local.
+--
+
+[panel,danger]
+.Je me suis trompé dans le prix unitaire et je souhaite réinitialiser
+--
+Vous pouvez le faire en saisissant 0 en prix unitaire, puis en saisissant le tarif souhaité
 --

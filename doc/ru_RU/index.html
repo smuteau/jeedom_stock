@@ -417,7 +417,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_description">1. Description</a>
 <ul class="sectlevel3">
-<li><a href="#_openpaths_géolocalisation_par_téléphone">1.1. Openpaths, géolocalisation par téléphone</a></li>
+<li><a href="#_gestion_de_stock">1.1. Gestion de stock</a></li>
 </ul>
 </li>
 <li><a href="#_configuration">2. Configuration</a>
@@ -426,12 +426,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_faq">3. FAQ</a></li>
-<li><a href="#_troubleshoting">4. Troubleshoting</a></li>
-<li><a href="#_changelog">5. Changelog</a>
-<ul class="sectlevel3">
-<li><a href="#_version_1">5.1. Version 1</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -440,15 +434,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_description">1. Description</h2>
 <div class="sectionbody">
 <div class="sect3">
-<h4 id="_openpaths_géolocalisation_par_téléphone">1.1. Openpaths, géolocalisation par téléphone</h4>
+<h4 id="_gestion_de_stock">1.1. Gestion de stock</h4>
 <div class="paragraph">
-<p>Ce plugin permet de récupérer les informations de géolocalisation depuis l&#8217;application Openpaths</p>
+<p>Ce plugin permet de suivre vos stocks, la consommation et le coût associé.</p>
 </div>
 <div class="paragraph">
-<p>Openpaths met à disposition des serveurs qui servent à stocker les données des applis mobiles. Mais sans pouvoir lire les données. Openpaths assure une confidentialité et une non utilisation des données sans votre accord.</p>
-</div>
-<div class="paragraph">
-<p>Il est possible de participer à un certain nombre de projets partenaire et ainsi transmettre des données anonymement mais ce choix est à faire et par défaut ce n&#8217;est pas actif (et l&#8217;activation se fait projet par projet)</p>
+<p>Son but est d&#8217;assurer une gestion la plus générique possible afin de permettre une utilisation sur le plus grand nombre de types de stock possible : pelets, buches, fioul, cuve de récupération d&#8217;eau de pluie voir stock de conserves etc &#8230;&#8203;</p>
 </div>
 <hr>
 </div>
@@ -468,13 +459,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>API Key (sur le site Openpaths.cc)</p>
+<p>Taille du stock</p>
 </li>
 <li>
-<p>API Secret (sur le site Openpaths.cc)</p>
+<p>Jour du début de la semaine</p>
 </li>
 <li>
-<p>la commande geoloc qu&#8217;on souhaite mettre à jour à partir des données Openpaths</p>
+<p>Commande de notification</p>
+</li>
+<li>
+<p>Seuils de notification pour la consommation journalière, hebdomadaire, mensuelle</p>
+</li>
+<li>
+<p>Commande de seuil</p>
+</li>
+<li>
+<p>Seuil d&#8217;activation de la commande</p>
 </li>
 </ul>
 </div>
@@ -486,35 +486,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_faq">3. FAQ</h2>
 <div class="sectionbody">
 <div class="openblock panel">
-<div class="title">Est-ce que le plugin s&#8217;appuie sur des API tiers ?</div><div class="content">
+<div class="title">Puis-je lier 2 stocks pour simuler par exemple un stock à la maison et un stock chez le fournisseur déjà acheté ?</div><div class="content">
 <div class="paragraph">
-<p>Oui, le plugin récupère ses informations des serveurs d&#8217;Openpaths</p>
+<p>Oui, il faudra alors 2 équipements Stock. Puis les lier via un scénario.</p>
+</div>
+<div class="paragraph">
+<p>Deux possibilités :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>utiliser un virtuel qui enlèvera du stock "fournisseur" et ajoutera au stock "local" la même quantité.</p>
+</li>
+<li>
+<p>directement utiliser les commandes du stock fournisseur pour déclencher l&#8217;ajout au stock local (ne pas oublier les 2 commandes Enlever 1 et Enlever X, attention dans ce cas il ne faudra pas utiliser Définir le stock)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Le scénario devra aussi basculer le nouveau prix si besoin sur le stock local.</p>
+</div>
+<div class="paragraph">
+<p>Une bonne solution peut être d&#8217;utiliser une fonction ask pour que jeedom vous demande si il y a eu un mouvement du stock fournisseur vers le stock local.</p>
 </div>
 </div>
 </div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshoting">4. Troubleshoting</h2>
-<div class="sectionbody">
 <div class="openblock panel">
-<div class="title">Je n&#8217;ai pas d&#8217;informations qui remontent</div><div class="content">
+<div class="title">Je me suis trompé dans le prix unitaire et je souhaite réinitialiser</div><div class="content">
 <div class="paragraph">
-<p>Il faut bien renseigner la configuration de l&#8217;équipement pour que les informations soient récupérées d&#8217;Openpaths.cc</p>
+<p>Vous pouvez le faire en saisissant 0 en prix unitaire, puis en saisissant le tarif souhaité</p>
 </div>
-</div>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_changelog">5. Changelog</h2>
-<div class="sectionbody">
-<div class="sect3">
-<h4 id="_version_1">5.1. Version 1</h4>
-<div class="paragraph">
-<p>Création du plugin</p>
 </div>
 </div>
 </div>
