@@ -122,7 +122,7 @@ $eqLogics = eqLogic::byType('stock');
 
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Taille Maximum}}</label>
+              <label class="col-sm-3 control-label">{{Taille du Stock}}</label>
               <div class="col-sm-3">
                 <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="maximum" type="text" placeholder="{{saisir la quantité maximum du stock}}">
               </div>
