@@ -2,7 +2,7 @@
 
 Le plugin ne comporte pas de configuration générale.
 
-Lorsque l'on créer un équipement on doit fournir les éléments suivant :
+Lorsque l'on crée un équipement, on doit fournir les éléments suivants :
 
   * Taille du stock
 
