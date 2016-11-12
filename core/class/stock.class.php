@@ -31,7 +31,7 @@ class stock extends eqLogic {
 		$this->checkCmdOk('price', 'stock', 'Prix unitaire', 'numeric', '1', 'badge');
 		$this->checkCmdOk('current', 'conso', 'Quantité du jour', 'numeric', '1', 'badge');
 		$this->checkCmdOk('daily', 'conso', 'Quantité veille', 'numeric', '1', 'badge');
-		$this->checkCmdOk('monthly', 'conso', 'Quantité mensuel', 'numeric', '0', 'badge');
+		$this->checkCmdOk('monthly', 'conso', 'Quantité mensuelle', 'numeric', '0', 'badge');
 		$this->checkCmdOk('weekly', 'conso', 'Quantité hebdomadaire', 'numeric', '0', 'badge');
 		$this->checkCmdOk('weeklyCountinuous', 'conso', 'Quantité hebdomadaire continue', 'numeric', '0', 'badge');
 		$this->checkCmdOk('current', 'price', 'Coût du jour', 'numeric', '0', 'badge');
